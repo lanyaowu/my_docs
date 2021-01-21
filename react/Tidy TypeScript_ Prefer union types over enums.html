@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://fettblog.eu/tidy-typescript-avoid-enums/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Tidy TypeScript: Prefer union types over enums</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="dodgerblue">
+<meta name="description" content="Articles on web dev and software engineering: TypeScript, JavaScript, Rust, and more!">
+<meta name="keywords" content="Web, Web Ops, DevOps, Performance, Front-End, JavaScript, CSS">
+
+<link rel="stylesheet" href="./Tidy TypeScript_ Prefer union types over enums_files/main.css">
+<link rel="stylesheet" href="./Tidy TypeScript_ Prefer union types over enums_files/css2">
+
+<link rel="alternate" type="application/rss+xml" title="front-end technology talk » Updates" href="https://fettblog.eu/feed.xml">
+
+<link rel="pingback" href="https://webmention.io/fettblog.eu/xmlrpc">
+<link rel="webmention" href="https://webmention.io/fettblog.eu/webmention">
+<link rel="apple-touch-icon" sizes="57x57" href="https://fettblog.eu/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://fettblog.eu/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://fettblog.eu/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://fettblog.eu/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://fettblog.eu/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://fettblog.eu/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://fettblog.eu/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://fettblog.eu/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://fettblog.eu/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://fettblog.eu/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fettblog.eu/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://fettblog.eu/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fettblog.eu/icon/favicon-16x16.png">
+<link rel="manifest" href="https://fettblog.eu/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://fettblog.eu/tidy-typescript-avoid-enums/">
+<link rel="preconnect" href="https://srv.carbonads.net/">
+<link rel="preconnect" href="https://cdn4.buysellads.net/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidy TypeScript: Prefer union types over enums">
+<meta name="twitter:creator" content="@ddprrt">
+<meta property="og:image" content="https://fettblog.eu/teasers/tidy-typescript-avoid-enums.png">
+<meta property="og:image:secure_url" content="https://fettblog.eu/teasers/tidy-typescript-avoid-enums.png">
+<meta name="twitter:image" content="https://fettblog.eu/teasers/tidy-typescript-avoid-enums.png">
+<script id="_carbonads_projs" type="text/javascript" src="./Tidy TypeScript_ Prefer union types over enums_files/CE7DT2JM.json"></script></head>
+<body>
+
+
+<article class="wrapper h-entry">
+<div class="bg">
+<div class="preamble main-frame">
+
+<h1>Tidy TypeScript: Prefer union types over enums</h1>
+
+</div>
+<div class="grid main-frame article">
+
+<div class="e-content">
+<p>This is the firstarticle in a <a href="https://fettblog.eu/archive/tidy-typescript/">series of articles</a> where I want to highlight ways on how to keep your TypeScript code neat and tidy. This series is heavily opinionated, so don’t be angry if I ditch a feature that you learned to like. It’s not personal.</p>
+<p>Today we look at enums. Enums are a feature that I see used a lot by people who come from languages like Java or C# because they have been so prominent there. Enums are also a feature from “the old days” of TypeScript where the JavaScript landscape was a lot different than it is now. And you can see that, as enums work exceptionally different than any other type in TypeScript.</p>
+<h2 id="enums-emit-code">Enums emit code <a class="direct-link" href="https://fettblog.eu/tidy-typescript-avoid-enums/#enums-emit-code">#</a></h2>
+<p>My most prefered way of writing TypeScript is to</p>
+<ul>
+<li>write regular, modern-day JavaScript.</li>
+<li>add types wherever we can strengthen TypeScript’s understanding of our code.</li>
+</ul>
+<p>This means after a compile step, you end up with the same code as before without the extra type defintions.</p>
+<p>Enums, like classes, create both a type and a value. Meaning that e.g. this declaration:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">enum</span> Direction <span class="token punctuation">{</span><br>  Up<span class="token punctuation">,</span><br>  Down<span class="token punctuation">,</span><br>  Left<span class="token punctuation">,</span><br>  Right<span class="token punctuation">,</span><br><span class="token punctuation">}</span></code></pre>
+<p>emits code in the JavaScript output.</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">var</span> Direction<span class="token punctuation">;</span><br><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>Direction<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>    Direction<span class="token punctuation">[</span>Direction<span class="token punctuation">[</span><span class="token string">"Up"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Up"</span><span class="token punctuation">;</span><br>    Direction<span class="token punctuation">[</span>Direction<span class="token punctuation">[</span><span class="token string">"Down"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Down"</span><span class="token punctuation">;</span><br>    Direction<span class="token punctuation">[</span>Direction<span class="token punctuation">[</span><span class="token string">"Left"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Left"</span><span class="token punctuation">;</span><br>    Direction<span class="token punctuation">[</span>Direction<span class="token punctuation">[</span><span class="token string">"Right"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Right"</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span>Direction <span class="token operator">||</span> <span class="token punctuation">(</span>Direction <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>You can get rid of the output if you use a <code>const enum</code>, but too often I’ve seen people using just regular enums everywhere and wondering why their output gets so big. Especially if you put “glue code” between front-end and back-end in enums you can end up with huge files and bundles.</p>
+<p>Okay, that’s one thing, and we can handle that by enforcing <code>const enum</code>s. But there is also this nasty ambiguity.</p>
+<h2 id="numeric-enums-are-not-type-safe">Numeric enums are not type-safe <a class="direct-link" href="https://fettblog.eu/tidy-typescript-avoid-enums/#numeric-enums-are-not-type-safe">#</a></h2>
+<p>Yes, you’ve heard right. Regular numeric enums – as in an enum where you don’t set string values – are not type-safe! If we look back at the <code>Direction</code> enum from earlier a function that takes a direction also takes <em>any</em> number value instead.</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">enum</span> Direction <span class="token punctuation">{</span><br>  Up<span class="token punctuation">,</span><br>  Down<span class="token punctuation">,</span><br>  Left<span class="token punctuation">,</span><br>  Right<span class="token punctuation">,</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">declare</span> <span class="token keyword">function</span> <span class="token function">move</span><span class="token punctuation">(</span>direction<span class="token operator">:</span> Direction<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span><br><br><span class="token function">move</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">// ☝️ This is totally ok! 😱</span></code></pre>
+<p>The reason is that there is a use-case of implementing bitmasks with numeric enums. And people seem to actually do that! Do a quick search for “TypeScript enum bitmask” or “bitwise flags” and see lots of implementations and examples. Enums provide syntactic sugar for this scenario. I’d argue that why this scenario is valid to implement in JavaScript, I’d doubt it’s the most common scenario you would use enums for.</p>
+<p>Usually, you want to make sure you only can pass values that are actually valid.</p>
+<p>So far for <em>numeric</em> enums. But there’s always <em>string</em> enums, right? They are type-safe, aren’t they? Yes. And they are peculiar!</p>
+<h2 id="string-enums-are-named-types">String enums are named types <a class="direct-link" href="https://fettblog.eu/tidy-typescript-avoid-enums/#string-enums-are-named-types">#</a></h2>
+<p>In a world of structural typings, enums chose to be a <em>named</em> type. This means that even if values are <em>valid</em> and compatible, you can’t pass them to a function or object where you expect a string enum. See this example:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">enum</span> Status <span class="token punctuation">{</span><br>  Admin <span class="token operator">=</span> <span class="token string">"Admin"</span><span class="token punctuation">,</span><br>  User <span class="token operator">=</span> <span class="token string">"User"</span><span class="token punctuation">,</span><br>  Moderator <span class="token operator">=</span> <span class="token string">"Moderator"</span><span class="token punctuation">,</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">declare</span> <span class="token keyword">function</span> <span class="token function">closeThread</span><span class="token punctuation">(</span>threadId<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> status<span class="token operator">:</span> Status<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span><br><br><span class="token function">closeThread</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token string">"Admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">//              ^ 💥 This is not allowed!</span><br><br><br><span class="token function">closeThread</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> Status<span class="token punctuation">.</span>Admin<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">//              ^ You have to be explicit!</span></code></pre>
+<p>This is something you can leverage, but it’s also very different from how number enums <em>and</em> the entire rest of TypeScript’s type system work.</p>
+<h2 id="prefer-union-types">Prefer union types <a class="direct-link" href="https://fettblog.eu/tidy-typescript-avoid-enums/#prefer-union-types">#</a></h2>
+<p>A simple union type gives you something that works similarly and is much more aligned with TypeScript.</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">Status</span> <span class="token operator">=</span> <span class="token string">"Admin"</span> <span class="token operator">|</span> <span class="token string">"User"</span> <span class="token operator">|</span> <span class="token string">"Moderator"</span><br><br><span class="token keyword">declare</span> <span class="token keyword">function</span> <span class="token function">closeThread</span><span class="token punctuation">(</span>threadId<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> status<span class="token operator">:</span> Status<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span><br><br><span class="token function">closeThread</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token string">"Admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">// All good 😄</span></code></pre>
+<p>You get all the benefits from enums like proper tooling and type-safety without going the extra round and risking to output code that you don’t want. It also becomes clearer what you need to pass, and where to get the value from. No need to manually map back-end strings to an enum just for the sake of it. Simple, clear, <strong>tidy</strong>!</p>
+<p>If you want to write your code enum-style, with an object and a named identifier, a <code>const</code> object with a <code>Values</code> helper type might just give you the desired behaviour and is <em>much</em> closer to JavaScript:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> Direction <span class="token operator">=</span> <span class="token punctuation">{</span><br>  Up<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span><br>  Down<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span><br>  Left<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span><br>  Right<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span><br><span class="token punctuation">}</span> <span class="token keyword">as</span> <span class="token keyword">const</span><span class="token punctuation">;</span><br><br><span class="token comment">// Get to the const values of any object</span><br><span class="token keyword">type</span> <span class="token class-name">Values<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span></span> <span class="token operator">=</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token keyword">keyof</span> <span class="token constant">T</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><br><span class="token comment">// Values&lt;typeof Direction&gt; yields 0 | 1 | 2 | 3</span><br><span class="token keyword">declare</span> <span class="token keyword">function</span> <span class="token function">move</span><span class="token punctuation">(</span><br>  direction<span class="token operator">:</span> Values<span class="token operator">&lt;</span><span class="token keyword">typeof</span> Direction<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span><br><br><span class="token function">move</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">//   ^ 💥 This breaks!</span><br><br><span class="token function">move</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">//   ^ 👍 This works!</span><br><br><span class="token function">move</span><span class="token punctuation">(</span>Direction<span class="token punctuation">.</span>Left<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">//   ^ 👍 This also works!</span><br><br><span class="token comment">// And now for the Status enum</span><br><br><span class="token keyword">const</span> Status <span class="token operator">=</span> <span class="token punctuation">{</span><br>  Admin<span class="token operator">:</span> <span class="token string">"Admin"</span><span class="token punctuation">,</span><br>  User<span class="token operator">:</span> <span class="token string">"User"</span><span class="token punctuation">,</span><br>  Moderator<span class="token operator">:</span> <span class="token string">"Moderator"</span><br><span class="token punctuation">}</span> <span class="token keyword">as</span> <span class="token keyword">const</span><span class="token punctuation">;</span><br><br><span class="token comment">// Values&lt;typeof Status&gt; yields "Admin" | "User" | "Moderator"</span><br><span class="token keyword">declare</span> <span class="token keyword">function</span> <span class="token function">closeThread</span><span class="token punctuation">(</span><br>  threadId<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> <br>  status<span class="token operator">:</span> Values<span class="token operator">&lt;</span><span class="token keyword">typeof</span> Status<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span><br><br><span class="token function">closeThread</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token string">"Admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// All good!</span><br><span class="token function">closeThread</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> Status<span class="token punctuation">.</span>User<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// enum style</span></code></pre>
+<p>There are also no surprises.</p>
+<ul>
+<li>You <em>know</em> what code you end up within the output.</li>
+<li>You don’t end up with changed behavior because somebody decides to go from a string enum to a numeric enum.</li>
+<li>You have type-safety where you need it.</li>
+<li>And you give your colleagues and users the same conveniences that you get with enums.</li>
+</ul>
+<p>But to be fair, a simple string union type does just what you need: Type-safety, auto-complete, predictable behavior.</p>
+<p>Of course, you can learn and remember all the peculiarities of enums and know quite well how to handle them. But why bother if there is a much clearer and easier way to achieve the same – if not better – type safety entirely in the type system? That’s why I suggest to <strong>prefer union types over enums</strong>.</p>
+<h2 id="further-reading">Further reading <a class="direct-link" href="https://fettblog.eu/tidy-typescript-avoid-enums/#further-reading">#</a></h2>
+<p>Note that as <a href="https://twitter.com/DeneauRomain/status/1348937601907097600">Sergey and Romain</a> point out, refactoring might be more difficult with string unions than with enums.</p>
+<ul>
+<li><a href="https://www.techatbloomberg.com/blog/10-insights-adopting-typescript-at-scale/">Rob Palmer from Bloomberg</a> wrote a great piece on how to adopt TypeScript at scale. The first point already nails it: TypeScript can be JavaScript plus types, so stay standards-compliant. Recommended read.</li>
+<li><a href="https://fettblog.eu/symbols-in-javascript-and-typescript/">I created a Symbol-based alternative to enums</a>. I still think for most use cases string union types are the way to go, but this is something worth exploring.</li>
+<li><a href="https://www.typescriptlang.org/tsconfig#isolatedModules">The isolated module flag prohibits the use of const enums</a>. This flag is on if you compile your stuff with Babel and use TypeScript just as a type checker. Important to know!</li>
+</ul>
+
+</div>
+
+</div>
+</article>
+
+
+</body></html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)https://zenn.dev/panda_program/articles/interface-and-refactoring -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="twitter:card" content="summary_large_image"><meta property="og:type" content="article"><meta property="og:site_name" content="Zenn"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="apple-mobile-web-app-title" content="Zenn"><link rel="shortcut icon" type="image/png" href="https://zenn.dev/images/icon.png"><link rel="apple-touch-icon-precomposed" type="image/png" href="https://zenn.dev/images/icon.png"><script type="text/javascript" async="" src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/js"></script><script type="text/javascript" async="" src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/analytics.js.ダウンロード"></script><script async="" src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/js(1)"></script><script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          </script><style>
+            @font-face {
+              font-family: 'Inter';
+              font-style: normal;
+              font-weight: 700;
+              font-display: swap;
+              src: local(''),
+                   url('https://res.cloudinary.com/dlhzyuewr/raw/upload/v1610254758/static/Inter-Bold_yvsyzx.woff2') format('woff2');
+            }</style><title>Reactコンポーネントの抽象化とインターフェースのリファクタリング</title><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><meta property="og:url" content="https://zenn.dev/panda_program/articles/interface-and-refactoring"><meta property="og:title" content="Reactコンポーネントの抽象化とインターフェースのリファクタリング"><meta property="og:image" content="https://res.cloudinary.com/dlhzyuewr/image/upload/s--HvrsGlUZ--/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2l6MVBBTkFPNzhHNkI2bGJoTUx2Q2xrWHRweU9vWXd1S3gyNjI2Rmc9czgwLWM=%2Cr_max%2Cw_90%2Cx_87%2Cy_72/co_rgb:222%2Cg_south_west%2Cl_text:notosansjp-medium.otf_37_bold:Panda_Program%2Cx_203%2Cy_98/c_fit%2Cco_rgb:222%2Cg_north_west%2Cl_text:notosansjp-medium.otf_70_bold:React%25E3%2582%25B3%25E3%2583%25B3%25E3%2583%259D%25E3%2583%25BC%25E3%2583%258D%25E3%2583%25B3%25E3%2583%2588%25E3%2581%25AE%25E6%258A%25BD%25E8%25B1%25A1%25E5%258C%2596%25E3%2581%25A8%25E3%2582%25A4%25E3%2583%25B3%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2595%25E3%2582%25A7%25E3%2583%25BC%25E3%2582%25B9%25E3%2581%25AE%25E3%2583%25AA%25E3%2583%2595%25E3%2582%25A1%25E3%2582%25AF%25E3%2582%25BF%25E3%2583%25AA%25E3%2583%25B3%25E3%2582%25B0%2Cw_1010%2Cx_90%2Cy_100/v1609308637/og/new_txlqub.png"><link rel="canonical" href="https://zenn.dev/panda_program/articles/interface-and-refactoring"><meta name="zenn:image" content="https://lh3.googleusercontent.com/a-/AOh14Giz1PANAO78G6B6lbhMLvClkXtpyOoYwuKx2626Fg=s250-c"><meta name="zenn:description" content="Panda_Programさんによる記事"><meta name="next-head-count" content="20"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/798c8aedcf9734622f8d.css" as="style"><link rel="stylesheet" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/798c8aedcf9734622f8d.css" data-n-g=""><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/77c8c6803713eefa8753.css" as="style"><link rel="stylesheet" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/77c8c6803713eefa8753.css" data-n-p=""><noscript data-n-css=""></noscript><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/main-ca11c0c9b4273dc22077.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/webpack-dfe7479d3ed271e6019e.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/framework-7d529544a9d53e618eda.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/0a301732-3667216a09a35e2b39e2.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/18b0e656eaed23f2d562db8159485a4206bfad07-b3b75abdae277e9269ac.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/d272d319fa10405543f8b798d81d604d81a1dc18-4615df50654171ab4fd8.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/3d21386cc698265bfb6b7439313b082408e68185-793d80c13521ccd21891.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/_app-722f9971e10dca77228f.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/78b2f4886030f73804231f578f277831ebc05906-381a543516dab5e36dda.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/5c2c6f9735cf6f2b6a87212f7c33fba4ecd699e7-ea7ed506353df58f67bc.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/2cee4052664657ffc92667e429a9b1dab9a8327e-3493d1a6bee818f89e77.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/0fef33b279f94e0e5b905023d83bd8db73ffff3d-6e1d9676c38c65f5c721.js.ダウンロード" as="script"><link rel="preload" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/[slug]-67a86dcdae6852fd3dc8.js.ダウンロード" as="script"><link rel="stylesheet" type="text/css" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/1386fe66befa4a198e1c.css"><link rel="stylesheet" type="text/css" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/5e5d2a93115bb3ac05b6.css"><link as="script" rel="prefetch" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/search-0cf1ff5a4eeb07a479f0.js.ダウンロード"><link as="script" rel="prefetch" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/enter-db34faca6ab225f3d8ed.js.ダウンロード"><link rel="stylesheet" type="text/css" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/f625cb620941517ba701.css"><link rel="stylesheet" type="text/css" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/fd95c632b079e866d337.css"><link rel="stylesheet" type="text/css" href="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/d5344b74829493810273.css">
+			</head>
+			<body>
+
+
+			
+			<h1 class="ArticleHeader_title__1z6An"><span style="font-size:0.864em">Reactコンポーネントの抽象化とインターフェースのリファクタリング</span></h1>
+			
+<br><br>
+			
+			<div id="toc-target-content"><div class="znc BodyContent_positionAdjusted__2o-Le">
+			<h2 id="%E8%A8%98%E4%BA%8B%E3%81%AE%E6%A6%82%E8%A6%81%E3%81%A8%E5%8B%95%E6%A9%9F">記事の概要と動機</h2>
+<p>Takepepeさんの<a href="https://zenn.dev/takepepe/articles/6978c067faab9e7d33c2">「AtomicDesign 境界線のひき方」</a>という記事を読んでいて、はたと気づいた。「限定的コンポーネントを横断的なものに移行する」という箇所は、SOLID原則のISPとそのリファクタリングの話だ。ISP（Interface Segregation Principle）とはインターフェース分離原則である。</p>
+<blockquote>
+<p>コンポーネントは、はじめは限定的コンテキストで実装するべきでしょう。共通利用される頃合いに、リファクタリングすれば十分です。その際に忘れてはならないことが「抽象化」です。</p>
+</blockquote>
+<p>この記事は、Takepepeさんの記事中の以下の一文に対して、インターフェースという観点から解説を加えた返歌、つまりアンサーソングである。</p>
+<h2 id="%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9">コンポーネントのインターフェース</h2>
+<p>フロントエンドのコンポーネントのインターフェースとは、単純化するとPropsの型である。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">type</span> <span class="token class-name">ArticlesListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  author<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  description<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> ArticlesListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ArticlesListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>Reactコンポーネントとは、Propsを引数にとり、ReactElementまたはnullを返す関数である。ReactコンポーネントにおいてPropsは可変である一方、返り値の型は不変である。そこで、関心の対象を可変であるPropsに絞ることにする。これが、「コンポーネントのインターフェースとは、単純化するとPropsの型」と述べた理由だ。</p>
+<h2 id="%E5%85%B7%E8%B1%A1%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88">具象コンポーネント</h2>
+<p>Propsの型が定義されていることで、親コンポーネント（依存する側）が子コンポーネント（依存される側）の使い方を知らなくて済む。つまり、<code>ParentComponent</code>は<code>ArticlesListCard</code>という具象コンポーネントではなく、<code>type ArticlesListCardProps</code>という抽象に依存する。</p>
+<p>（オブジェクト指向言語では抽象クラスと具象クラスの区別が存在する一方、Reactでは抽象コンポーネントは存在しない。以下ではPropsの型という抽象との対比を強調するため、一般的なReactコンポーネントを具象コンポーネントと呼ぶことにする）</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> ArticlesListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./ArticlesListCard'</span>
+
+<span class="token keyword">const</span> ParentComponent <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">ArticlesListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">author</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'著者名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">description</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'説明'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SomeComponent</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>ここでは、要件が加わり、<code>ArticlesListCard</code>を<code>OtherArticlesListCard</code>というコンポーネントに変更すると仮定する。DOMの構造は変更されているが、利用するPropsの型は同じだ。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">type</span> <span class="token class-name">ArticlesListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  author<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  description<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> ArticlesListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ArticlesListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>author<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>description<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> OtherArticlesListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ArticlesListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>description<span class="token punctuation">}</span><span class="token plain-text">（</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>author<span class="token punctuation">}</span><span class="token plain-text">）</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>すると、Parentコンポーネントでは<code>ArticlesListCard</code>を<code>OtherArticlesListCard</code>に変更する修正だけで済む。親コンポーネントが渡すPropsに変更がないことに注目頂きたい。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> OtherArticlesListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./ArticlesListCard'</span>
+
+<span class="token keyword">const</span> ParentComponent <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">OtherArticlesListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">author</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'著者名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">description</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'説明'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>Propsの変更が不要である理由は、<code>ParentComponent</code>は具象コンポーネント<code>ArticlesListCard</code>に依存しており、<code>ArticlesListCard</code>は<code>ArticlesListCardProps</code>という抽象に依存しているるためだ。</p>
+<p>想定通り動作していることを確認したら、<code>OtherArticlesListCard</code>の名前を<code>ArticlesListCard</code>に変更し、<code>ArticlesListCard</code>を削除する。これで安全なリファクタリングが可能だ。</p>
+<p>ただ、DOMの変更のみであれば直接JSXを書き換えるだけで十分だ。実務でこの手順を踏んでいる方はいないだろう。ここでは説明のためにあえて上記の手順を踏んだ。重要なのは「インターフェースを固定したまま、具体的な実装を差し替える」という意識である。</p>
+<h2 id="%E4%BC%BC%E3%81%A6%E9%9D%9E%E3%81%AA%E3%82%8B%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%81%AE%E7%99%BB%E5%A0%B4">似て非なるコンポーネントの登場</h2>
+<p>次に、似て非なるコンポーネントが登場したとする。Propsの型は以下の通りだ。</p>
+<p>Takepepeさんの記事を引用すると、ArticlesListCardとほとんど同じである。</p>
+<blockquote>
+<p>「author・publisher」「description・body」は同じ場所にレンダリングされる値です。</p>
+</blockquote>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">type</span> <span class="token class-name">PublishersListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  publisher<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  body<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> PublishersListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>PublishersListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>body<span class="token punctuation">}</span><span class="token plain-text">（</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>publisher<span class="token punctuation">}</span><span class="token plain-text">）</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>説明を簡単にするために、<code>PublishersListCard</code>を先ほどの<code>ParentComponent</code>で利用する。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> OtherArticlesListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./ArticlesListCard'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> PublishersListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./PublishersListCard'</span>
+
+<span class="token keyword">const</span> ParentComponent <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">ArticlesListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">author</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'著者名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">description</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'説明'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">PublishersListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">publisher</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'出版社名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">body</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'本文'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>コンポーネントを対比すると共通点を可視化できる。<code>ParentComponent</code>は<code>ArticlesListCard</code>と<code>PublishersListCard</code>という具象に依存している。</p>
+<h2 id="%E4%BE%9D%E5%AD%98%E9%96%A2%E4%BF%82%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B">依存関係を図示する</h2>
+<p>ParentComponentと２つのコンポーネントに対する依存を図示する。</p>
+<p><img src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/u8rmd5vsd9qi86prmc66i7s7temk" alt="UML図" loading="lazy"></p>
+<p>この図を見て、オブジェクト指向言語でのプログラミングに慣れた方であれば、依存の方向を逆転させることを考えるだろう。つまり、ParentComponentは具体的な２つのコンポーネントに依存するのではなく、Propsの型に依存するべきだと思うはずだ（DIP）。</p>
+<p>しかし、筆者の知る限りReactにはコンポーネントのDI機構はないため、（1つずつコンポーネントをPropsとして渡せばDI自体は可能だが）具象コンポーネントを利用する方が一般的である。</p>
+<p>ただし、TypeScriptやFlowで記述している場合、親コンポーネント側に明示的に子コンポーネントのPropsの型を記述しなくても、親コンポーネント側から渡すPropsの値との整合性をチェックしてくれる。このため、厳密には正確ではないと自覚しつつ、筆者はコンポーネントの依存関係を以下のように理解、解釈している。</p>
+<p><img src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/celdijnzwhgxd5h53kq2drtrshmj" alt="UML図" loading="lazy"></p>
+<p>コンポーネント同士の依存関係を明示できたため、インターフェースをリファクタリングする必要性を容易に理解できるだろう。</p>
+<h2 id="%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%E3%82%92%E3%83%AA%E3%83%95%E3%82%A1%E3%82%AF%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%99%E3%82%8B">インターフェースをリファクタリングする</h2>
+<p>もう一度Propsの型定義を見てみよう。プロパティ名以外の違いはないことに気付くはずだ。つまり、2つのPropsの型には共通点をまとめるというリファクタリングの余地があるのだ。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-ts"><code class="language-ts"><span class="token keyword">type</span> <span class="token class-name">ArticlesListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  author<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  description<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> <span class="token class-name">PublishersListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  publisher<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  body<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+      </div>
+      <p>そこで、Takepepeさんは以下のように型を抽象化している。コンポーネントでPropsの使われ方を参照しつつ、プロパティ名が一段階抽象化されていることが読み取れる。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-ts"><code class="language-ts"><span class="token keyword">type</span> <span class="token class-name">ListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  subTitle<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  main<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+      </div>
+      <p>この<code>ListCardProps</code>型を利用して、コンポーネントのリファクタリングを実施する。</p>
+<h2 id="%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%82%92%E3%83%AA%E3%83%95%E3%82%A1%E3%82%AF%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%99%E3%82%8B">コンポーネントをリファクタリングする</h2>
+<p><code>ArticlesListCard</code>と<code>PublishersListCard</code>を<code>ListCardProps</code>に依存させ、具象コンポーネントをリファクタリングする。まずはコンポーネントが受け取るPropsを変更する。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">type</span> <span class="token class-name">ListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  subTitle<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  main<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> ArticlesListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>main<span class="token punctuation">}</span><span class="token plain-text">（</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>subTitle<span class="token punctuation">}</span><span class="token plain-text">）</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">type</span> <span class="token class-name">ListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  subTitle<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  main<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> PublishersListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>main<span class="token punctuation">}</span><span class="token plain-text">（</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>subTitle<span class="token punctuation">}</span><span class="token plain-text">）</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>ParentComponentは以下のようになる。この段階でParentComponentは具象（<code>ArticlesListCard</code>と<code>PublishersListCard</code>）に依存している。抽象（<code>ListCardProps</code>）には、両コンポーネントを通して間接的に依存している。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> ArticlesListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./ArticlesListCard'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> PublishersListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./PublishersListCard'</span>
+
+<span class="token keyword">const</span> ParentComponent <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">ArticlesListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">subTitle</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'著者名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">main</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'説明'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">PublishersListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">subTitle</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'出版社名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">main</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'本文'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>次に、<code>ListCardProps</code>という抽象に依存したコンポーネントを同一ファイル<code>ListCard</code>にまとめる。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">type</span> <span class="token class-name">ListCardProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  subTitle<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  main<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> ArticlesListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>main<span class="token punctuation">}</span><span class="token plain-text">（</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>subTitle<span class="token punctuation">}</span><span class="token plain-text">）</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> PublishersListCard<span class="token operator">:</span> React<span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span>ListCardProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>main<span class="token punctuation">}</span><span class="token plain-text">（</span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>subTitle<span class="token punctuation">}</span><span class="token plain-text">）</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>props<span class="token punctuation">.</span>title<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>これによりParentComponentは以下のように書き換えられる。</p>
+
+      <div class="code-block-container">
+        
+        <pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> ArticlesListCard<span class="token punctuation">,</span> PublishersListCard <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./ListCard'</span>
+
+<span class="token keyword">const</span> ParentComponent <span class="token operator">=</span> React<span class="token punctuation">.</span><span class="token function-variable function">FC</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">ArticlesListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">subTitle</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'著者名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">main</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'説明'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">PublishersListCard</span></span> <span class="token attr-name">title</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'タイトル'</span><span class="token punctuation">}</span></span> <span class="token attr-name">subTitle</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'出版社名'</span><span class="token punctuation">}</span></span> <span class="token attr-name">main</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token string">'本文'</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">)</span>
+</code></pre>
+
+      </div>
+      <p>これでリファクタリングが完了し、依存関係を整理できた。</p>
+<h2 id="%E6%94%B9%E3%82%81%E3%81%A6%E4%BE%9D%E5%AD%98%E9%96%A2%E4%BF%82%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B">改めて依存関係を図示する</h2>
+<p>リファクタリングの結果、コンポーネントの依存関係は以下のように変化した。</p>
+<p><img src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/obl7dqamoynv13nazj110u10kron" alt="UML図" loading="lazy"></p>
+<p>しかし、リファクタリング前に図示した時と同様に、ParentComponentを実装している間、私には依存関係が以下のように見えるのである。</p>
+<p><img src="./Reactコンポーネントの抽象化とインターフェースのリファクタリング_files/9n9u1cw7a9l4n41ok91z63egeh9t" alt="UML図" loading="lazy"></p>
+<p>最初の図と比べてみて欲しい。</p>
+<h2 id="%E5%85%B7%E8%B1%A1%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F%E6%8A%BD%E8%B1%A1%E3%81%AB%E4%BE%9D%E5%AD%98%E3%81%99%E3%82%8B">具象ではなく抽象に依存する</h2>
+<p>この記事では、Takepepeさんの記事を元に、インターフェースという観点からコンポーネントとPropsのリファクタリングの過程を示した。</p>
+<p>実はTypeScriptでPropsの型を記述すると、コンポーネントからインターフェースを分離できているのである。しかし、その分離、つまり抽象化の仕方がまずいとコンポーネントは複雑性を抱えたままになる。</p>
+<p>早すぎる抽象化は害悪である。似て非なるコンポーネントが登場した時がリファクタリングのチャンスだ。そして具象は変わりやすい。変わりにくい抽象に依存しよう。</p>
+<p>この記事ではISPを取り上げた。しかし、SRP、OCP、DIPなど他の重要な原則はフロントエンドのプログラミングにも通じる箇所がある。</p>
+<p>フロントエンドエンジニアの皆さんも、SOLID原則を意識してプログラミングに取り組んでみて欲しい。自分の見てきた世界が一変する感覚を味わった時には、既にあなたのスキルはレベルアップしている。</p>
+<p>（ちなみにLSPは探究中、というかReactでは<a href="https://ja.reactjs.org/docs/composition-vs-inheritance.html" rel="nofollow">「継承よりコンポジションを好む」</a>ため、特に意識しなくていいのではないかとも思っている。ReactにもLSPが役立つよ、という知見をお持ちの方はぜひコメント欄で教えてください）</p>
+
+
+</body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://fettblog.eu/tidy-typescript-prefer-type-aliases/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Tidy TypeScript: Prefer type aliases over interfaces</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="dodgerblue">
+<meta name="description" content="Articles on web dev and software engineering: TypeScript, JavaScript, Rust, and more!">
+<meta name="keywords" content="Web, Web Ops, DevOps, Performance, Front-End, JavaScript, CSS">
+
+<link rel="stylesheet" href="./Tidy TypeScript_ Prefer type aliases over interfaces_files/main.css">
+<link rel="stylesheet" href="./Tidy TypeScript_ Prefer type aliases over interfaces_files/css2">
+
+<link rel="alternate" type="application/rss+xml" title="front-end technology talk » Updates" href="https://fettblog.eu/feed.xml">
+
+<link rel="pingback" href="https://webmention.io/fettblog.eu/xmlrpc">
+<link rel="webmention" href="https://webmention.io/fettblog.eu/webmention">
+<link rel="apple-touch-icon" sizes="57x57" href="https://fettblog.eu/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://fettblog.eu/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://fettblog.eu/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://fettblog.eu/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://fettblog.eu/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://fettblog.eu/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://fettblog.eu/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://fettblog.eu/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://fettblog.eu/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://fettblog.eu/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fettblog.eu/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://fettblog.eu/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fettblog.eu/icon/favicon-16x16.png">
+<link rel="manifest" href="https://fettblog.eu/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://fettblog.eu/tidy-typescript-prefer-type-aliases/">
+<link rel="preconnect" href="https://srv.carbonads.net/">
+<link rel="preconnect" href="https://cdn4.buysellads.net/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidy TypeScript: Prefer type aliases over interfaces">
+<meta name="twitter:creator" content="@ddprrt">
+<meta property="og:image" content="https://fettblog.eu/teasers/tidy-typescript-prefer-type-aliases.png">
+<meta property="og:image:secure_url" content="https://fettblog.eu/teasers/tidy-typescript-prefer-type-aliases.png">
+<meta name="twitter:image" content="https://fettblog.eu/teasers/tidy-typescript-prefer-type-aliases.png">
+<script id="_carbonads_projs" type="text/javascript" src="./Tidy TypeScript_ Prefer type aliases over interfaces_files/CE7DT2JM.json"></script></head>
+<body>
+
+<article class="wrapper h-entry">
+<div class="bg">
+<div class="preamble main-frame">
+
+<h1>Tidy TypeScript: Prefer type aliases over interfaces</h1>
+
+</div>
+</div>
+<div class="grid main-frame article">
+
+<div class="e-content">
+<p>This is the second article in a <a href="https://fettblog.eu/archive/tidy-typescript/">series of articles</a> where I want to highlight ways on how to keep your TypeScript code neat and tidy. By nature, this series is heavily opinionated and is to be taken with grains of salt (that’s plural).</p>
+<p>There are two different ways in TypeScript to declare object types: Interfaces and type aliases. Both approaches to defining object types have been subject to lots of blog articles over the years. And all of them became outdated as time progressed. Right now, there is little difference between type aliases and interfaces. And everything that <em>was</em> different has been gradually aligned.</p>
+<p>Syntactically, their difference is nuanced:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">PersonAsType</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  age<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span><br>  address<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br>  <span class="token function">greet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token keyword">interface</span> <span class="token class-name">PersonAsInterface</span> <span class="token punctuation">{</span><br>  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  age<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span><br>  address<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br>  <span class="token function">greet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<p>It’s an equal sign. This nuance can have some effect on the time of type evaluation – immediate for the type alias, lazy for interfaces – but that’s it. You can use interfaces and type aliases for the same things, in the same scenarios:</p>
+<ul>
+<li>In an <code>implements</code> declaration for classes</li>
+<li>As a type annotation for object literals</li>
+<li>For recursive type structures</li>
+</ul>
+<p>You name it! There is however one <em>important</em> difference that can have side effects you usually don’t want to deal with:</p>
+<h3 id="declaration-merging">Declaration merging <a class="direct-link" href="https://fettblog.eu/tidy-typescript-prefer-type-aliases/#declaration-merging">#</a></h3>
+<p>Interfaces allow for <em>declaration merging</em>, type aliases don’t. Declaration merging allows for adding properties to an interface even after it has been declared.</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">interface</span> <span class="token class-name">Person</span> <span class="token punctuation">{</span><br>  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">interface</span> <span class="token class-name">Person</span> <span class="token punctuation">{</span><br>  age<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token comment">// Person is now { name: string; age: number; }</span></code></pre>
+<p>TypeScript itself uses this technique a lot in <code>lib.d.ts</code> files, making it possible to just add deltas of new JavaScript APIs based on ECMAScript versions. This is a great feature if you want to extend e.g. <code>Window</code>, but it can fire back in other scenarios. Take this as an example:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// Some data we collect in a web form</span><br><span class="token keyword">interface</span> <span class="token class-name">FormData</span> <span class="token punctuation">{</span><br>  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  age<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span><br>  address<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><br><br><span class="token comment">// A function that sends this data to a back-end</span><br><span class="token keyword">function</span> <span class="token function">send</span><span class="token punctuation">(</span>data<span class="token operator">:</span> FormData<span class="token punctuation">)</span> <span class="token punctuation">{</span><br>  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">entries</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// this compiles!! 😱</span><br>  <span class="token comment">// but crashes horrendously in runtime 😕</span><br><span class="token punctuation">}</span></code></pre>
+<p>Oh, bother, where does the <code>entries()</code> method come from? It’s a <a href="https://github.com/microsoft/TypeScript/blob/9c71eaf59040ae75343da8cdff01344020f5bba2/src/lib/dom.iterable.d.ts#L81">DOM API</a>! <code>FormData</code> is one of the interfaces provided by browser APIs, and there are a lot of them. They are globally available, and nothing keeps you from extending those interfaces. And you get no notification if you do.</p>
+<p>We can of course argue about proper naming, but the problem persists for all interfaces that you make available globally, maybe from some dependency where you don’t even know they add an interface like that to the global space.</p>
+<p>Changing this interface to a type alias immediately makes you aware of this problem:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">FormData</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br><span class="token comment">//   ^ 💥 Duplicate identifier 'FormData'.(2300)</span><br>  name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span><br>  age<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span><br>  address<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span></code></pre>
+<p>It also prevents your types from being extended unknowingly.</p>
+<h2 id="index-access-types">Index access types <a class="direct-link" href="https://fettblog.eu/tidy-typescript-prefer-type-aliases/#index-access-types">#</a></h2>
+<p>Declaration merging is also the reason why interfaces won’t work as a subset of <em>index access types</em>. Below is an example that sends data to a server. You can pass in any object and a set of HTTP headers that require all keys to be of <code>string</code> and all values to be of <code>string</code>.</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">declare</span> <span class="token keyword">function</span> <br>  <span class="token function">send</span><span class="token punctuation">(</span>data<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span> headers<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span></code></pre>
+<p><code>Record&lt;string, string&gt;</code> is the same as <code>{ [key: string]: string }</code>, which shows the flexible index access better.</p>
+<p>Let’s do two type definitions for required HTTP headers. Once as object type:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">HTTPHeaders</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>  Accept<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span><br>  Cookie<span class="token operator">:</span> <span class="token builtin">string</span><br><span class="token punctuation">}</span></code></pre>
+<p>And another one as an interface:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">interface</span> <span class="token class-name">HTTPHeaderInterface</span> <span class="token punctuation">{</span><br>  Accept<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span><br>  Cookie<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span><br><span class="token punctuation">}</span></code></pre>
+<p>If you call <code>send</code> with an object that has been annotated as <code>HTTPHeaders</code>, everything is wonderful:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> hdrs<span class="token operator">:</span> HTTPHeaders <span class="token operator">=</span> <span class="token punctuation">{</span><br>  Accept<span class="token operator">:</span> <span class="token string">"text/html"</span><span class="token punctuation">,</span><br>  Cookie<span class="token operator">:</span> <span class="token string">""</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> hdrs<span class="token punctuation">)</span> <span class="token comment">// 👍</span></code></pre>
+<p>But the moment you change <code>hdrs</code> to <code>HTTPHeadersInterface</code>, things go boom:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> hdrs<span class="token operator">:</span> HTTPHeaderInterface <span class="token operator">=</span> <span class="token punctuation">{</span><br>  Accept<span class="token operator">:</span> <span class="token string">"text/html"</span><span class="token punctuation">,</span><br>  Cookie<span class="token operator">:</span> <span class="token string">""</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span><br><br><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> hdrs<span class="token punctuation">)</span> <br><span class="token comment">//       ^ 💥 Index signature is missing in type 'HTTPHeaderInterface'</span></code></pre>
+<p>TypeScript will complain that the <em>index signature is missing</em>. Only if the type is final, like with <code>HTTPHeaders</code>, TypeScript can correctly check if all properties and values are assignable to the <code>Record&lt;string, string&gt;</code> type we declared in <code>send</code>. Since interfaces are up for declaration merging, and therefore not all properties are known, TypeScript can’t tell if the index signature is compatible with <code>Record&lt;string, string&gt;</code>.</p>
+<p>That’s why I suggest to <strong>prefer type aliases over interfaces</strong>. Of course, if you are providing a library that has interfaces that should be extendable by others, type aliases won’t get you far. But other than that, type aliases are clear, simple, and <strong>tidy</strong>.</p>
+
+</div>
+
+</div>
+</article>
+
+
+
+</body></html>

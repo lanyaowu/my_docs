@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://fettblog.eu/tidy-typescript-name-your-generics/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Tidy TypeScript: Name your generics</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="dodgerblue">
+<meta name="description" content="Articles on web dev and software engineering: TypeScript, JavaScript, Rust, and more!">
+<meta name="keywords" content="Web, Web Ops, DevOps, Performance, Front-End, JavaScript, CSS">
+
+<link rel="stylesheet" href="./Tidy TypeScript_ Name your generics_files/main.css">
+<link rel="stylesheet" href="./Tidy TypeScript_ Name your generics_files/css2">
+
+<link rel="alternate" type="application/rss+xml" title="front-end technology talk » Updates" href="https://fettblog.eu/feed.xml">
+
+<link rel="pingback" href="https://webmention.io/fettblog.eu/xmlrpc">
+<link rel="webmention" href="https://webmention.io/fettblog.eu/webmention">
+<link rel="apple-touch-icon" sizes="57x57" href="https://fettblog.eu/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://fettblog.eu/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://fettblog.eu/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://fettblog.eu/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://fettblog.eu/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://fettblog.eu/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://fettblog.eu/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://fettblog.eu/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://fettblog.eu/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://fettblog.eu/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fettblog.eu/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://fettblog.eu/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fettblog.eu/icon/favicon-16x16.png">
+<link rel="manifest" href="https://fettblog.eu/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://fettblog.eu/tidy-typescript-name-your-generics/">
+<link rel="preconnect" href="https://srv.carbonads.net/">
+<link rel="preconnect" href="https://cdn4.buysellads.net/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tidy TypeScript: Name your generics">
+<meta name="twitter:creator" content="@ddprrt">
+<meta property="og:image" content="https://fettblog.eu/teasers/tidy-typescript-name-your-generics.png">
+<meta property="og:image:secure_url" content="https://fettblog.eu/teasers/tidy-typescript-name-your-generics.png">
+<meta name="twitter:image" content="https://fettblog.eu/teasers/tidy-typescript-name-your-generics.png">
+<script id="_carbonads_projs" type="text/javascript" src="./Tidy TypeScript_ Name your generics_files/CE7DT2JM.json"></script></head>
+<body>
+
+
+
+<article class="wrapper h-entry">
+<div class="bg">
+<div class="preamble main-frame">
+
+<h1>Tidy TypeScript: Name your generics</h1>
+
+
+</div>
+</div>
+<div class="grid main-frame article">
+
+<div class="e-content">
+<p>My book <a href="https://typescript-book.com/">TypeScript in 50 Lessons</a> features interludes. Short texts on TypeScript culture that provide room to breathe between heavy, technical tutorials. One of those interludes gives some opinionated advice on how to name generic variables.</p>
+<p>I want to recap this text piece and elaborate. And this series is called <em>Tidy TypeScript</em>, so expect an even more opinionated stance.</p>
+<h2 id="generic-programming">Generic programming <a class="direct-link" href="https://fettblog.eu/tidy-typescript-name-your-generics/#generic-programming">#</a></h2>
+<p>TypeScript’s generics are arguably one of the most powerful features of the language. They open a door to TypeScript’s own meta-programming language, which allows for a very flexible and dynamic generation of types. It comes really close to being its own functional programming language, as Anders Hejlsberg stated <a href="https://www.youtube.com/watch?v=IGw2MRI0YV8">in his 2020 TSConf keynote</a>.</p>
+<p>Especially with the arrival of <em>string literal types</em> and <em>recursive conditional types</em> in the most recent TypeScript versions, we can craft types that do astonishing things. This little type parses Express-style route information and retrieves an object with all its parameters:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">ParseRouteParameters<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span></span> <span class="token operator">=</span> <br>  <span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token builtin">string</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>infer <span class="token constant">U</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>infer <span class="token constant">R</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span> <span class="token operator">?</span> <br>    <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token constant">P</span> <span class="token keyword">in</span> <span class="token constant">U</span> <span class="token operator">|</span> <span class="token keyword">keyof</span> ParseRouteParameters<span class="token operator">&lt;</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">R</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token operator">&gt;</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token punctuation">}</span> <span class="token operator">:</span> <br>  <span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token builtin">string</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>infer <span class="token constant">U</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span> <span class="token operator">?</span><br>    <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token constant">P</span> <span class="token keyword">in</span> <span class="token constant">U</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token punctuation">}</span> <span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><br><br><br><span class="token keyword">type</span> <span class="token class-name"><span class="token constant">X</span></span> <span class="token operator">=</span> ParseRouteParameters<span class="token operator">&lt;</span><span class="token string">"/api/:what/:is/notyou/:happening"</span><span class="token operator">&gt;</span><br><span class="token comment">// type X = {</span><br><span class="token comment">//   what: string,</span><br><span class="token comment">//   is: string,</span><br><span class="token comment">//   happening: string, </span><br><span class="token comment">// }</span></code></pre>
+<p>Powerful! (Dan shows a more elaborate version of this type over at his blog, <a href="https://effectivetypescript.com/2020/11/05/template-literal-types/">check it out</a>).</p>
+<p>When we define a <em>generic type</em>, we also define <em>generic type parameters</em>. That’s the stuff between the angle brackets that we sometimes causally call <em>generics</em>.</p>
+<p>They can be of a certain type (or more correct: be a certain sub-type):</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">Foo<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token builtin">string</span><span class="token operator">&gt;</span></span> <span class="token operator">=</span> <span class="token operator">...</span></code></pre>
+<p>They can have default values:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">Foo<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token operator">&gt;</span></span> <span class="token operator">=</span> <span class="token operator">...</span></code></pre>
+<p>And when using default values, <em>order</em> is important. Lots of similarities to regular JavaScript functions! So since we are almost talking functions, why are we using single-letter names for generic type parameters?</p>
+<h2 id="naming-generic-type-parameters">Naming generic type parameters <a class="direct-link" href="https://fettblog.eu/tidy-typescript-name-your-generics/#naming-generic-type-parameters">#</a></h2>
+<p>Most generic type parameters start with the letter <code>T</code>. Subsequent parameters go along the alphabet (<code>U</code>, <code>V</code>, <code>W</code>), or are abbreviations like <code>K</code> for <code>key</code>.</p>
+<p>As with almost any programming concept, the idea of Generics has been around for quite some time. Some major implementations of generic types can be seen in programming languages of the Seventies, such as <em>Ada</em> and <em>ML</em>.</p>
+<p>I don’t know if naming type parameters <code>T</code> has started back then, or if it was the popularity of the similar – albeit more powerful – templating concept in C++ that led us to generally calling them that way. The point is: We are doing that for a long time. We are used to it.</p>
+<p>This can lead to highly unreadable types, however. If I look at <code>Pick&lt;T, U&gt;</code>, I can never tell if I pick keys <code>T</code> from object type <code>U</code>, or if it’s object type <code>T</code>, where I pick keys <code>U</code>.</p>
+<p>Being a bit more elaborate helps a lot:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">Pick<span class="token operator">&lt;</span>Obj<span class="token punctuation">,</span> Keys<span class="token operator">&gt;</span></span> <span class="token operator">=</span> <span class="token operator">...</span></code></pre>
+<p>Note: The actual <code>Pick</code> type is much better defined in TypeScript (with <code>K extends keyof T</code>), but you get the idea. <code>Exclude</code>, <code>Extract</code>, <code>Record</code> … all of them make me scratch my head.</p>
+<p>So even though it’s common to use single letter names for our generics, I think we can do better!</p>
+<h2 id="a-naming-concept">A naming concept <a class="direct-link" href="https://fettblog.eu/tidy-typescript-name-your-generics/#a-naming-concept">#</a></h2>
+<p>Types are documentation, and our type parameters can have speaking names. Just like you would do with regular functions. This is the style guide I’m using:</p>
+<ol>
+<li>All type parameters start with an uppercase letter. Like I would name all other types!</li>
+<li>Only use single letters if the usage is completely clear. E.g. <code>ParseRouteParams</code> can only have one argument, the route.</li>
+<li>Don’t abbreviate to <code>T</code> (that’s way too … generic! 🤨), but to something that makes it clear what we are dealing with. E.g. <code>ParseRouteParams&lt;R&gt;</code>, where <code>R</code> stands for <code>Route</code>.</li>
+<li>Rarely use single letters, stick to short words, or abbreviations. <code>Elem</code> for <code>Element</code>, <code>Route</code> can stand as it is.</li>
+<li>Use prefixes where I need to differentiate from built-in types. E.g. <code>Element</code> is taken, I can use <code>GElement</code> (or stick with <code>Elem</code>)</li>
+<li>Use prefixes to make generic names clearer <code>URLObj</code> is clearer than <code>Obj</code>, for instance.</li>
+<li>Same patterns apply to inferred types within a generic type.</li>
+</ol>
+<p>Let’s look at <code>ParseRouteParams</code> again, and be more explicit with our names:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">type</span> <span class="token class-name">ParseRouteParameters<span class="token operator">&lt;</span>Route<span class="token operator">&gt;</span></span> <span class="token operator">=</span> <br>  Route <span class="token keyword">extends</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token builtin">string</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>infer Param<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>infer Rest<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span> <span class="token operator">?</span> <br>    <span class="token punctuation">{</span> <span class="token punctuation">[</span>Entry <span class="token keyword">in</span> Param <span class="token operator">|</span> <span class="token keyword">keyof</span> ParseRouteParameters<span class="token operator">&lt;</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>Rest<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token operator">&gt;</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token punctuation">}</span> <span class="token operator">:</span> <br>  Route <span class="token keyword">extends</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token builtin">string</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>infer Param<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span> <span class="token operator">?</span><br>    <span class="token punctuation">{</span> <span class="token punctuation">[</span>Entry <span class="token keyword">in</span> Param<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token punctuation">}</span> <span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<p>It becomes a lot clearer what each type is meant to be. We also see that we need to iterate over all <code>Entries</code> in <code>Param</code>, even if <code>Param</code> is just a set of one type.</p>
+<p>Arguably, a lot more readable than before!</p>
+<p>Counter arguments? Well, generic programming in TypeScript is close to functional programming. And you know that functional programming is where you name your functions <em>f</em>, your arguments <em>x</em>, and your patterns <a href="https://wiki.haskell.org/Zygohistomorphic_prepromorphisms">Zygohistomorphic prepromorphism</a>. 😜</p>
+<p>You can read a lot more on generics, how generics work in TypeScript and what they are capable of in my book <a href="https://typescript-book.com/">TypeScript in 50 lessons</a>.</p>
+
+
+
+</div>
+</div>
+
+</div>
+</article>
+
+<script src="./Tidy TypeScript_ Name your generics_files/main.js.ダウンロード" async=""></script>
+
+
+</body></html>

@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)https://basarat.gitbook.io/typescript/getting-started/why-typescript -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Why TypeScript - TypeScript Deep Dive</title>
+            <meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta data-react-helmet="true" name="google" value="notranslate"><meta data-react-helmet="true" property="og:image" content="https://app.gitbook.com/share/space/thumbnail/-LxQ3jdctbmysueh2fxn.png"><meta data-react-helmet="true" property="twitter:card" content="summary"><meta data-react-helmet="true" property="twitter:site" content="TypeScript Deep Dive">
+            <link data-react-helmet="true" rel="stylesheet" href="./Why TypeScript - TypeScript Deep Dive_files/css"><link data-react-helmet="true" rel="stylesheet" href="./Why TypeScript - TypeScript Deep Dive_files/emojione-sprite-40.min.css"><link data-react-helmet="true" rel="preconnect" href="https://www.googleapis.com/"><link data-react-helmet="true" rel="preconnect" href="https://api.amplitude.com/"><link data-react-helmet="true" rel="preconnect" href="https://gblobscdn.gitbook.com/"><link data-react-helmet="true" rel="canonical" href="https://basarat.gitbook.io/typescript/getting-started/why-typescript">
+            <style data-react-helmet="true" type="text/css">
+        @font-face {
+            font-family: "Roboto";
+            src: local("Roboto"), local("Roboto-Regular"), url(https://gstatic.gitbook.com/fonts/fc3d4b35e4d07d4e0485cc2db0e57c77.woff) format('woff');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "Roboto";
+            src: local("Roboto Medium"), local("Roboto-Medium"), url(https://gstatic.gitbook.com/fonts/f4fa50c4003f87e7dc10459e500933c3.woff) format('woff');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "Roboto";
+            src: local("Roboto Bold"), local("Roboto-Bold"), url(https://gstatic.gitbook.com/fonts/72e37e5bf95a8dba938c78b1d7d91253.woff) format('woff');
+            font-weight: 700;
+            font-display: swap;
+        }
+    </style><style data-react-helmet="true" type="text/css">
+        @font-face {
+            font-family: "Content-font";
+            src: local("Roboto"), local("Roboto-Regular"), url(https://gstatic.gitbook.com/fonts/fc3d4b35e4d07d4e0485cc2db0e57c77.woff) format('woff');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "Content-font";
+            src: local("Roboto Medium"), local("Roboto-Medium"), url(https://gstatic.gitbook.com/fonts/f4fa50c4003f87e7dc10459e500933c3.woff) format('woff');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "Content-font";
+            src: local("Roboto Bold"), local("Roboto-Bold"), url(https://gstatic.gitbook.com/fonts/72e37e5bf95a8dba938c78b1d7d91253.woff) format('woff');
+            font-weight: 700;
+            font-display: swap;
+        }
+    </style>
+	
+            <script async="" src="./Why TypeScript - TypeScript Deep Dive_files/analytics.js.ダウンロード"></script><script data-react-helmet="true" type="text/javascript" defer="true" src="./Why TypeScript - TypeScript Deep Dive_files/polyfill.min.js.ダウンロード"></script>
+            <style>#__GITBOOK__ROOT__SERVER__ { width: 100%; height: 100%; display: flex;}</style>
+            <style>#__GITBOOK__ROOT__CLIENT__ { width: 100%; min-height: 100%; height: initial; display: flex;}</style>
+            
+        <script src="./Why TypeScript - TypeScript Deep Dive_files/logger.min.js.ダウンロード" async=""></script><meta name="description" content="" data-react-helmet="true"><meta property="og:title" content="Why TypeScript" data-react-helmet="true"><meta property="og:description" content="" data-react-helmet="true"><style data-jss="" data-meta="aphrodite-to-jss">
+html, body {
+  color: #242A31;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  background: #F5F7F9;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  line-height: 1em;
+  font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+@media screen and (min-width: 768px) {
+  html, body {
+    text-rendering: optimizeLegibility;
+  }
+}
+@media print {
+  html, body {
+    background: transparent;
+  }
+}
+*, *:before, *:after {
+  outline: none;
+  box-sizing: inherit;
+}
+@font-face {
+  font-family: "Flow-Rounded";
+  src: url("https://gstatic.gitbook.com/fonts/bfc0a96537ceb0cad9e956b9f980fe88.woff") format('woff');
+  font-display: block;
+}
+input, select, textarea {
+  font-size: 16px;
+}
+input, select, textarea, button {
+  font: inherit;
+}
+input[type="search"] {
+  -webkit-appearance: none;
+}
+.draggingElement, .draggingElement *:hover {
+  cursor: grabbing !important;
+  pointer-events: auto !important;
+}
+.draggingElement .draggingHidden {
+  display: none;
+}
+</style><style data-jss="" data-meta="aphrodite-to-jss">
+.reset-3c756112--body-68cac36c {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #242A31;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  background: #F5F7F9;
+  min-height: 100vh;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--header-07037613--header-11420428 {
+  display: -webkit-box;
+  height: 80px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  z-index: 20;
+  position: relative;
+  box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.1);
+  border-bottom: 1px solid #d4dadf;
+  background-color: #FFFFFF;
+}
+@media print {
+  .reset-3c756112--header-07037613--header-11420428 {
+    display: none;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--header-07037613--header-11420428 {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    top: 0;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--header-07037613--header-11420428 {
+    height: 60px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+.reset-3c756112--headerContainer-bb8cc0bc {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  padding: 0;
+  max-width: 1448px;
+}
+.reset-3c756112--headerLeftColumn-4eae0bae--headerLeftColumn-7efc9f26 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-box-pack: justify;
+  -webkit-box-align: center;
+}
+@media screen and (min-width: 1024px) {
+  .reset-3c756112--headerLeftColumn-4eae0bae--headerLeftColumn-7efc9f26 {
+    max-width: 298px;
+    justify-content: center;
+    -webkit-box-pack: center;
+  }
+  .reset-3c756112--headerLeftColumn-4eae0bae--headerLeftColumn-7efc9f26:after {
+    top: 50%;
+    right: 0;
+    height: 40px;
+    content: " ";
+    position: absolute;
+    transform: translateY(-50%);
+    border-left: 1px solid #E6ECF1;
+  }
+}
+.reset-3c756112--mobileButton-7a76d05f {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 0 0 auto;
+  width: 30px;
+  cursor: pointer;
+  height: 30px;
+  margin: 0;
+  display: flex;
+  outline: none;
+  padding: 0;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+@media screen and (min-width: 1024px) {
+  .reset-3c756112--mobileButton-7a76d05f {
+    display: none;
+  }
+}
+.icon-7f6730be--text-3f89f380--icon-1f8349b3 {
+  color: #242A31;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+.reset-3c756112--headerLogo-5c0b38e2 {
+  margin: 0;
+  display: block;
+  padding: 0px 24px;
+}
+@media screen and (min-width: 1024px) {
+  .reset-3c756112--headerLogo-5c0b38e2 {
+    width: 250px;
+    padding: 0;
+  }
+}
+.reset-3c756112--mobileLogo-dacfd15c {
+  margin: 0;
+  display: none;
+  padding: 0;
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--mobileLogo-dacfd15c {
+    display: block;
+  }
+}
+.link-a079aa82--primary-53a25e66--logoLink-10d08504 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #3884FF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  -webkit-box-align: center;
+}
+.reset-3c756112--S100Left-7c8af13a--logoDisplayNameContainer-583bfe61--logoText-2f40da90 {
+  flex: 1;
+  color: #242A31;
+  margin: 0;
+  display: block;
+  padding: 0;
+  padding-left: 8px;
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--S100Left-7c8af13a--logoDisplayNameContainer-583bfe61--logoText-2f40da90 {
+    overflow: hidden;
+    max-width: 50vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.reset-3c756112--S100Left-7c8af13a--logoDisplayNameContainer-583bfe61--logoText-2f40da90:hover {
+  color: #3884FF;
+}
+.text-4505230f--UIH400-4e41e82a--textContentFamily-49a318e1--spaceNameText-677c2969 {
+  font-size: 16px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+.reset-3c756112--desktopLogo-a594db90 {
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--desktopLogo-a594db90 {
+    display: none;
+  }
+}
+.reset-3c756112--headerInnerWrapper-629f79d1--headerInnerWrapper-4f99acea {
+  flex: 1 1 auto;
+  margin: 0px 88px;
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  max-width: 750px;
+}
+.reset-3c756112--headerInnerWrapper-629f79d1--headerInnerWrapper-4f99acea:after {
+  background: -webkit-linear-gradient(to right, rgba(255,255,255,0) 0%, #FFFFFF 100%);
+  background: -moz-linear-gradient(to right, rgba(255,255,255,0) 0%, #FFFFFF 100%);
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 100%;
+  content: " ";
+  position: absolute;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, #FFFFFF 100%);
+  pointer-events: none;
+}
+@media screen and (max-width: 1439px) {
+  .reset-3c756112--headerInnerWrapper-629f79d1--headerInnerWrapper-4f99acea {
+    margin: 0px 24px 0px 88px;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--headerInnerWrapper-629f79d1--headerInnerWrapper-4f99acea {
+    display: none;
+  }
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48 {
+  display: -webkit-box;
+  overflow-x: auto;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  opacity: 1;
+  padding: 0;
+  overflow-x: overlay;
+  overflow-y: hidden;
+  transition: flex 250ms ease,width 250ms ease,opacity 250ms ease;
+  -moz-transition: flex 250ms ease,width 250ms ease,opacity 250ms ease;
+  -webkit-transition: flex 250ms ease,width 250ms ease,opacity 250ms ease;
+  -webkit-overflow-scrolling: touch;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-scrollbar-track {
+  background: none;
+  border-width: 0;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+  transition: background 250ms ease;
+  border-radius: 2px;
+  -moz-transition: background 250ms ease;
+  -webkit-transition: background 250ms ease;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-scrollbar-button {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-scrollbar-track-piece {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-scrollbar-corner {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48::-webkit-resizer {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48:hover::-webkit-scrollbar {
+  display: initial;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisX-bf86cd6c--headerInner-c872fc48:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+}
+.reset-3c756112--link-0be4f603 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  height: 100%;
+  margin: 0px 16px;
+  display: flex;
+  padding: 0;
+  border-top: 3px solid transparent;
+  align-items: center;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  -webkit-box-align: center;
+}
+.reset-3c756112--link-0be4f603:first-child  {
+  margin-left: 0;
+}
+.button-36063075--medium-6e2a217a--button-d70f9d42--linkButton-67c61496--links-10c4adc0 {
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  color: #3884FF !important;
+  border: 1px solid;
+  cursor: pointer;
+  height: 40px;
+  display: inline-flex;
+  outline: none;
+  padding: 0;
+  transition: all 250ms ease-out;
+  align-items: center;
+  line-height: 1em;
+  white-space: nowrap;
+  border-color: transparent;
+  border-radius: 3px;
+  -moz-transition: all 250ms ease-out;
+  justify-content: center;
+  text-decoration: none;
+  -webkit-box-pack: center;
+  background-color: transparent;
+  -webkit-box-align: center;
+  -webkit-transition: all 250ms ease-out;
+}
+.button-36063075--medium-6e2a217a--button-d70f9d42--linkButton-67c61496--links-10c4adc0:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.button-36063075--medium-6e2a217a--button-d70f9d42--linkButton-67c61496--links-10c4adc0:hover {
+  color: hsl(217.10000000000002, 100%, 42.7%) !important;
+}
+.button-36063075--medium-6e2a217a--button-d70f9d42--linkButton-67c61496--links-10c4adc0:active {
+  color: #3884FF;
+}
+.text-4505230f--UIH400-4e41e82a--textContentFamily-49a318e1--text-8ee2c8b2 {
+  font-size: 16px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1em;
+}
+.text-4505230f--UIH400-4e41e82a--textContentFamily-49a318e1 {
+  font-size: 16px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.reset-3c756112--searchInputWrapper-ea7f3052--searchInputWrapper-0442d130 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  height: 80px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  max-width: 224px;
+  align-items: center;
+  -webkit-box-align: center;
+}
+.reset-3c756112--searchInputWrapper-ea7f3052--searchInputWrapper-0442d130:before {
+  top: 50%;
+  left: 0;
+  height: 40px;
+  content: " ";
+  position: absolute;
+  transform: translateY(-50%);
+  border-left: 1px solid #E6ECF1;
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--searchInputWrapper-ea7f3052--searchInputWrapper-0442d130 {
+    display: none;
+  }
+}
+.reset-3c756112--inputContainer-b2cb171c {
+  margin: 0;
+  display: block;
+  padding: 0;
+  padding-left: 14px;
+  padding-right: 16px;
+}
+.inputInner-5c86b87d--medium-0bbed4bd--inputInner-4216b016--searchInputPlaceholder-936306be {
+  font: inherit;
+  color: #242A31;
+  width: 100%;
+  border: none;
+  cursor: inherit;
+  height: 38px;
+  margin: 0;
+  resize: none;
+  outline: none;
+  padding: 0px 8px;
+  background: transparent;
+  box-sizing: border-box;
+  text-align: left;
+  line-height: inherit;
+  border-radius: 3px;
+}
+.inputInner-5c86b87d--medium-0bbed4bd--inputInner-4216b016--searchInputPlaceholder-936306be::placeholder {
+  color: #9DAAB6;
+  font-size: 16px;
+  font-weight: 500;
+}
+.reset-3c756112--inputWrapper-63396dac--TextH400-3033861f--medium-4505230f--light-502263b4--input-6d442051--searchInput-3fa812d5 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  width: 100%;
+  border: none;
+  margin: 0;
+  display: flex;
+  outline: none;
+  padding: 0;
+  font-size: 16px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  font-weight: 400;
+  line-height: 1.625;
+  border-radius: 3px;
+  background-color: #FFFFFF;
+}
+.reset-3c756112--inputInnerSizer-756c9114 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+.reset-3c756112--inputAddOn-45de9ec1--inputAddOnPrefix-202fa60d--icon-1f8349b3 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 0 0 auto;
+  color: #242A31;
+  order: -1;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  padding-left: 8px;
+  -webkit-box-align: center;
+}
+.icon-7f6730be--text-3f89f380 {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+.reset-3c756112--bodyContent-2f98451b {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 1;
+  color: #3B454E;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  padding: 0;
+}
+.reset-3c756112--wholeContent-9fc567d4 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  min-height: 100%;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--wholeContentBody-554be184 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 1;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  transition: margin-bottom 250ms ease;
+  align-items: stretch;
+  -moz-transition: margin-bottom 250ms ease;
+  -webkit-box-align: stretch;
+  -webkit-transition: margin-bottom 250ms ease;
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--wholeContentBody-554be184 {
+    padding-top: 80px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--wholeContentBody-554be184 {
+    padding-top: 60px;
+  }
+}
+@keyframes keyframes-animation-2f81d449-0-1-1 {
+  0% {
+    background-color: rgba(24, 48, 85, 0);
+  }
+  100% {
+    background-color: rgba(24, 48, 85, 0.30000000000000004);
+  }
+}
+.reset-3c756112--backdrop-1322b68a--hidden-247382c3--overlay-29559ab8 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  z-index: 29;
+  position: absolute;
+  transition: background-color 250ms ease-out;
+  align-items: center;
+  animation-name: none;
+  pointer-events: none;
+  -moz-transition: background-color 250ms ease-out;
+  justify-content: center;
+  -webkit-box-pack: center;
+  background-color: rgba(24, 48, 85, 0);
+  -webkit-box-align: center;
+  -webkit-transition: background-color 250ms ease-out;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+@media screen and (min-width: 1024px) {
+  .reset-3c756112--backdrop-1322b68a--hidden-247382c3--overlay-29559ab8 {
+    z-index: 14;
+  }
+}
+.reset-3c756112--contentNavigation-dd3370a4 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  z-index: 30;
+}
+@media print {
+  .reset-3c756112--contentNavigation-dd3370a4 {
+    display: none;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .reset-3c756112--contentNavigation-dd3370a4 {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    flex: 0 0 auto;
+    width: calc((100% - 1448px) / 2 + 298px);
+    display: flex;
+    z-index: 15;
+    min-width: 298px;
+    background: #F5F7F9;
+    align-items: stretch;
+    border-right: 1px solid #E6ECF1;
+    padding-left: calc((100% - 1448px) / 2);
+    flex-direction: column;
+    -webkit-box-align: stretch;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+  }
+}
+.reset-3c756112--contentNavigationInner-205d49ea--contentNavigationInnerCollapsed-7b4aca00 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--contentNavigationInner-205d49ea--contentNavigationInnerCollapsed-7b4aca00 {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 30;
+    position: fixed;
+    max-width: 298px;
+    transform: translateX(-100%) !important;
+    box-shadow: none;
+    overflow-y: auto;
+    transition: transform 250ms ease;
+    border-right: 1px solid #E6ECF1;
+    -moz-transition: transform 250ms ease;
+    background-color: #fff;
+    -webkit-transition: transform 250ms ease;
+  }
+}
+.reset-3c756112--sidebarWrapper-84a13d8e {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  align-items: stretch;
+  flex-direction: column;
+  -webkit-box-align: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112 {
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+.reset-3c756112--sidebar-84a13d8e {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  align-items: stretch;
+  flex-direction: column;
+  -webkit-box-align: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--sidebarMain-13701e8f {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  overflow-y: hidden;
+  flex-direction: column;
+  background-color: #F5F7F9;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  width: 100%;
+  margin: 0;
+  display: block;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  -webkit-overflow-scrolling: touch;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-scrollbar-track {
+  background: none;
+  border-width: 0;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+  transition: background 250ms ease;
+  border-radius: 2px;
+  -moz-transition: background 250ms ease;
+  -webkit-transition: background 250ms ease;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-scrollbar-button {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-scrollbar-track-piece {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-scrollbar-corner {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe::-webkit-resizer {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe:hover::-webkit-scrollbar {
+  display: initial;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--sidebarInner-18a1e7fe:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+}
+.reset-3c756112--mobileHeader-4e2d4892 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #74818D;
+  height: 59px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  box-shadow: 0 1px 1px 0 rgba(116, 129, 141, 0.1);
+  align-items: stretch;
+  border-bottom: 1px solid #d4dadf;
+  background-color: #FFFFFF;
+  -webkit-box-align: stretch;
+}
+@media screen and (min-width: 768px) {
+  .reset-3c756112--mobileHeader-4e2d4892 {
+    display: none;
+  }
+}
+.reset-3c756112--mobileHeaderClose-47b8fa64 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  padding: 8px 16px;
+  font-size: 24px;
+  align-items: center;
+  -webkit-box-align: center;
+}
+.reset-3c756112--pagesTree-4b07cd56 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  font-size: 15px;
+  margin-top: 32px;
+  padding-left: 16px;
+}
+@media screen and (min-width: 768px) {
+  .reset-3c756112--pagesTree-4b07cd56 {
+    padding-left: 24px;
+  }
+}
+.reset-3c756112--pageItem-01e3f344 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  border-left: 1px solid transparent;
+}
+.reset-3c756112--pageComponent-7cc5301a {
+  margin: 0;
+  display: block;
+  padding: 0;
+  margin-left: -1px;
+}
+.navButton-94f2579c--navButtonClickable-161b88ca {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: inherit;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  padding: 7px 24px 7px 16px;
+  position: relative;
+  align-items: center;
+  border-right: 0;
+  text-decoration: none;
+  -webkit-box-align: center;
+}
+.navButton-94f2579c--navButtonClickable-161b88ca:hover {
+  background-color: #E6ECF1;
+}
+.text-4505230f--UIH300-2063425d--textContentFamily-49a318e1--navButtonLabel-14a4968f {
+  flex: 1;
+  font-size: 14px;
+  word-break: break-word;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.reset-3c756112--pageItemWithChildren-56f27afc {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+}
+.reset-3c756112--navButtonIcon-433c72ce--navButtonIconClickable-11a89312 {
+  color: #9DAAB6;
+  cursor: pointer;
+  margin: -8px;
+  display: block;
+  padding: 8px;
+  position: relative;
+  font-size: 18px;
+  line-height: 1;
+  margin-left: 0;
+}
+.reset-3c756112--navButtonIcon-433c72ce--navButtonIconClickable-11a89312:hover {
+  color: #5C6975;
+}
+.icon-7f6730be--text-3f89f380--pageDocumentIconExpanded-014d853c {
+  width: 1em;
+  height: 1em;
+  transform: rotateZ(90deg);
+  vertical-align: middle;
+}
+.reset-3c756112--pageChildren-56f27afc--pageDocumentChildren-2add00e7 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  margin-left: 16px;
+}
+.reset-3c756112--pageChildren-56f27afc--pageDocumentChildren-2add00e7:before {
+  top: 0;
+  left: 0;
+  width: 1px;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  background: #E6ECF1;
+}
+.navButton-94f2579c--pageItemWithChildrenNested-2c5d8183--navButtonClickable-161b88ca--navButtonOpened-6a88552e {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #9DAAB6;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  padding: 7px 24px 7px 16px;
+  position: relative;
+  align-items: center;
+  border-color: #E6ECF1 !important;
+  border-right: 0;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  -webkit-box-align: center;
+}
+.navButton-94f2579c--pageItemWithChildrenNested-2c5d8183--navButtonClickable-161b88ca--navButtonOpened-6a88552e:hover {
+  border-color: #E6ECF1;
+  background-color: #FFFFFF;
+}
+.reset-3c756112--pageItemWithChildren-56f27afc--S300Bottom-9b4658d2 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  margin-bottom: 24px;
+}
+.reset-3c756112--footer-68e6f18c {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+}
+.reset-3c756112--footer-68e6f18c:before {
+  background: -webkit-linear-gradient(to bottom, rgba(255,255,255,0) 0%, #F5F7F9 100%);
+  background: -moz-linear-gradient(to bottom, rgba(255,255,255,0) 0%, #F5F7F9 100%);
+  top: -24px;
+  width: 100%;
+  height: 24px;
+  content: "";
+  display: block;
+  position: absolute;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #F5F7F9 100%);
+}
+.reset-3c756112--trademark-a8da4b94 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #9DAAB6;
+  margin: 16px;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  margin-left: 32px;
+  padding-top: 8px;
+  padding-left: 16px;
+  border-radius: 3px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  text-decoration: none;
+  background-color: #E6ECF1;
+  -webkit-box-align: center;
+}
+.reset-3c756112--trademark-a8da4b94:hover {
+  color: #3884FF;
+}
+.reset-3c756112--trademarkLogo-0d2d53bc {
+  margin: 0;
+  display: block;
+  padding: 0;
+  font-size: 40px;
+}
+.reset-3c756112--trademarkContent-04a01aea {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+  padding-left: 16px;
+}
+.text-4505230f--TextH200-a3425406--textUIFamily-5ebd8e40 {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  line-height: 1.625;
+}
+.reset-3c756112--wholeContentPage-6c3f1fc5 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 1 1 auto;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  max-width: 100%;
+  min-width: 0;
+  background: #fff;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--wholePageSticky-f53dafd2 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 1 1 auto;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  min-width: 0;
+}
+.reset-3c756112--pageContainer-544d6e9c {
+  flex: 1 1 auto;
+  margin: 0px 16px;
+  display: block;
+  padding: 0;
+  max-width: 750px;
+  min-width: 0;
+  padding-bottom: 64px;
+}
+@media screen and (max-width: 1023px) {
+  .reset-3c756112--pageContainer-544d6e9c {
+    margin: 0px auto;
+    padding: 0px 24px 24px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .reset-3c756112--pageContainer-544d6e9c {
+    margin: 0px 88px;
+  }
+}
+.reset-3c756112--pageHeader-15724735 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  border-bottom: 2px solid #E6ECF1;
+  margin-bottom: 32px;
+}
+.reset-3c756112--pageHeaderInner-7c0f0284 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: auto;
+  margin: 0;
+  display: flex;
+  padding: 40px 0px;
+}
+@media screen and (min-width: 768px) {
+  .reset-3c756112--pageHeaderInner-7c0f0284 {
+    flex-wrap: wrap;
+    align-items: baseline;
+    flex-direction: row;
+    -webkit-box-align: baseline;
+    -webkit-box-lines: multiple;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+  }
+}
+.reset-3c756112--pageHeaderWrapperContent-6897c946 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+}
+.reset-3c756112--horizontalFlex-5a0077e0 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  align-items: stretch;
+  justify-content: space-between;
+  -webkit-box-pack: justify;
+  -webkit-box-align: stretch;
+}
+.reset-3c756112--pageHeaderIntro-0c1463da {
+  flex: 1 1 auto;
+  margin: 0;
+  display: block;
+  padding: 0;
+  padding-right: 16px;
+}
+.reset-3c756112--pageTitle-33dc39a3 {
+  color: #242A31;
+  width: 100%;
+  border: none;
+  margin: 0;
+  display: block;
+  outline: none;
+  padding: 0;
+  background: none;
+  border-radius: 3px;
+}
+.text-4505230f--DisplayH900-bfb998fa--textContentFamily-49a318e1 {
+  font-size: 32px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.reset-3c756112--toolbar-a6a9f7d2--medium-8e46b02c--pageHeaderToolbar-6457a802--withControlsClosed-3e96e46c {
+  display: -ms-inline-grid;
+  margin: 0;
+  display: none;
+  padding: 0;
+  margin-top: 9px;
+  -ms-grid-rows: none;
+  grid-column-gap: 16px;
+  grid-template-rows: none;
+}
+@media screen and (max-width: 1279px) {
+  .reset-3c756112--toolbar-a6a9f7d2--medium-8e46b02c--pageHeaderToolbar-6457a802--withControlsClosed-3e96e46c {
+    display: block;
+  }
+}
+.button-36063075--small-30ceeddb--button-4b4c5088--small-54db2a94 {
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  color: #9DAAB6;
+  width: 30px;
+  border: 1px solid;
+  cursor: pointer;
+  height: 30px;
+  display: inline-flex;
+  outline: none;
+  padding: 0;
+  transition: all 250ms ease-out;
+  align-items: center;
+  line-height: 1em;
+  white-space: nowrap;
+  border-color: transparent;
+  border-radius: 3px;
+  -moz-transition: all 250ms ease-out;
+  justify-content: center;
+  text-decoration: none;
+  -webkit-box-pack: center;
+  background-color: transparent;
+  -webkit-box-align: center;
+  -webkit-transition: all 250ms ease-out;
+}
+.button-36063075--small-30ceeddb--button-4b4c5088--small-54db2a94:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.button-36063075--small-30ceeddb--button-4b4c5088--small-54db2a94:hover {
+  color: #3884FF;
+}
+.small-3bde6db7--iconOnly-bddce91a {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin: 0;
+  display: flex;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+.text-4505230f--UIH300-2063425d--textUIFamily-5ebd8e40--text-8ee2c8b2 {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: 1em;
+}
+.reset-3c756112--pageHeaderDescription-22970244 {
+  flex: auto;
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+.reset-3c756112--toaster-c029690e {
+  top: 16px;
+  left: 50%;
+  margin: 0;
+  display: block;
+  padding: 0;
+  z-index: 160;
+  position: fixed;
+  transform: translateX(-50%);
+}
+.reset-3c756112--pageBody-a91db4ac {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  font-size: 16px;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--container-960c7c26 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  margin-bottom: -24px;
+}
+.blockParagraph-544a408c {
+  color: inherit;
+  margin: 0;
+  position: relative;
+  margin-bottom: 24px;
+}
+.text-4505230f--TextH400-3033861f--textContentFamily-49a318e1 {
+  font-size: 16px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.625;
+}
+.list-20526648 {
+  color: #3B454E;
+  margin: 0;
+  padding: 0;
+  padding-left: 2em;
+  margin-bottom: 24px;
+}
+.reset-3c756112--listItemContent-756c9114 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+.blockParagraph-544a408c--noMargin-acdf7afa {
+  color: inherit;
+  margin: 0;
+  position: relative;
+  margin-bottom: 0;
+}
+.blockHeading-442b4f12--blockHeading1WithMargin-b69d755e {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #242A31;
+  margin: 0;
+  display: flex;
+  position: relative;
+  margin-top: 73px;
+  margin-bottom: 24px;
+}
+.blockHeading-442b4f12--blockHeading1WithMargin-b69d755e:before {
+  top: -32px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: " ";
+  position: absolute;
+  background-color: #E6ECF1;
+}
+.blockHeadingContent-756c9114 {
+  flex: 1;
+}
+.text-4505230f--HeadingH700-04e1a2a3--textContentFamily-49a318e1 {
+  font-size: 24px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda {
+  color: #242A31;
+  width: 20px;
+  opacity: 0;
+  transition: opacity 150ms ease;
+  line-height: 1em;
+  padding-left: 4px;
+  -moz-transition: opacity 150ms ease;
+  -webkit-transition: opacity 150ms ease;
+}
+.blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda:hover {
+  color: #3884FF;
+}
+@media print {
+  .blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda {
+    display: none;
+  }
+}
+.blockHeadingAnchorIcon-1c2bf3cb {
+  font-size: 16px;
+  vertical-align: middle;
+}
+.reset-3c756112--blockHeadingUp-c32402b2 {
+  width: 1em;
+  cursor: pointer;
+  height: 1em;
+  margin: 0;
+  display: block;
+  outline: none;
+  padding: 0;
+  line-height: 1em;
+}
+@media screen and (min-width: 768px) {
+  .reset-3c756112--blockHeadingUp-c32402b2 {
+    display: none;
+  }
+}
+@media print {
+  .reset-3c756112--blockHeadingUp-c32402b2 {
+    display: none;
+  }
+}
+.bold-3c254bd9 {
+  font-weight: 700;
+}
+.blockHeading-442b4f12--blockHeading2WithMargin-532d771d {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #242A31;
+  margin: 0;
+  display: flex;
+  position: relative;
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+.text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1 {
+  font-size: 20px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.code-0458e21e {
+  margin: 0 1px;
+  display: inline-block;
+  padding: 3px 6px;
+  font-size: 85%;
+  max-width: 100%;
+  font-family: "Source Code Pro", Consolas, Menlo, monospace;
+  border-radius: 3px;
+  background-color: #F5F7F9;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+@supports (-moz-appearance:none) {
+  .code-0458e21e {
+    font-family: Consolas, Menlo, Monaco, Courier, monospace;
+  }
+}
+.code-0458e21e:after {
+  content: "\00a0";
+  letter-spacing: -1em;
+}
+.reset-3c756112--codeBlockWrapper-56f27afc {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+}
+.reset-3c756112--copyButtonWrapper-ca591f6e {
+  top: 16px;
+  right: 16px;
+  margin: 0;
+  display: block;
+  padding: 0;
+  z-index: 1;
+  position: absolute;
+}
+@keyframes keyframes-animation-bd7e9c6a-0-1-2 {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe {
+  color: #9DAAB6;
+  cursor: pointer;
+  margin: 0;
+  display: block;
+  opacity: 0.5;
+  outline: none;
+  padding: 8px;
+  position: relative;
+  font-size: 16px;
+  line-height: 1em;
+}
+.reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe:hover {
+  opacity: 1;
+}
+@media print {
+  .reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe {
+    display: none;
+  }
+}
+.reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe:after {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  top: calc(100% + 16px);
+  left: 50%;
+  color: #FFFFFF;
+  width: max-content;
+  bottom: auto;
+  content: attr(aria-label);
+  display: none;
+  opacity: 0;
+  padding: 5px 8px;
+  z-index: 155;
+  position: absolute;
+  font-size: 12px;
+  max-width: 300px;
+  transform: translateX(-50%);
+  background: #242A31;
+  font-weight: 400;
+  line-height: 1.625;
+  white-space: normal;
+  border-radius: 3px;
+  animation-name: keyframes-animation-bd7e9c6a-0-1-2;
+  pointer-events: none;
+  text-transform: none;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+}
+.reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe:before {
+  top: calc(100% + 8px);
+  left: 50%;
+  width: 0;
+  bottom: auto;
+  height: 0;
+  content: "";
+  display: none;
+  opacity: 0;
+  z-index: 156;
+  position: absolute;
+  transform: translateX(-50%);
+  border-color: #242A31 transparent;
+  border-style: solid;
+  animation-name: keyframes-animation-bd7e9c6a-0-1-2;
+  border-top-width: 0;
+  border-left-width: 8px;
+  animation-duration: 0.2s;
+  border-right-width: 8px;
+  animation-fill-mode: forwards;
+  border-bottom-width: 8px;
+}
+.reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe:hover:before {
+  display: block;
+}
+.reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe:hover:after {
+  display: block;
+}
+.reset-3c756112--codeBlock-36378b66 {
+  color: #E6ECF1;
+  margin: 32px 0px;
+  display: block;
+  hyphens: none;
+  padding: 24px 24px 24px 8px;
+  overflow: auto;
+  tab-size: 2;
+  direction: ltr;
+  font-size: 14px;
+  background: #183055;
+  text-align: left;
+  word-break: normal;
+  -ms-hyphens: none;
+  font-family: "Source Code Pro", Consolas, Menlo, Monaco, Courier, monospace;
+  line-height: 1.4;
+  white-space: pre;
+  word-spacing: normal;
+  -moz-tab-size: 2;
+  border-radius: 3px;
+  -webkit-hyphens: none;
+}
+@supports (-moz-appearance:none) {
+  .reset-3c756112--codeBlock-36378b66 {
+    font-family: Consolas, Menlo, Monaco, Courier, monospace;
+  }
+}
+.reset-3c756112--codeBlock-36378b66::selection {
+  background: #D3DCE4;
+  text-shadow: none;
+}
+.codeLine-a3169fbc {
+  font: inherit;
+  padding: 0px 0px;
+  position: relative;
+  word-wrap: normal;
+  white-space: pre;
+  padding-left: 44px;
+  padding-right: 14px;
+  counter-increment: line;
+}
+.codeLine-a3169fbc:not(:only-child):before {
+  top: 2px;
+  left: 4px;
+  color: #5C6975;
+  width: 24px;
+  bottom: 0;
+  content: counter(line);
+  display: inline-block;
+  overflow: hidden;
+  position: absolute;
+  font-size: 12px;
+  text-align: right;
+  user-select: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  background-color: transparent;
+  -webkit-user-select: none;
+}
+.codeLine-a3169fbc:only-child {
+  padding-left: 30px;
+}
+.link-a079aa82--primary-53a25e66--link-faf6c434 {
+  color: #3884FF;
+  cursor: pointer;
+  text-decoration: none;
+}
+.link-a079aa82--primary-53a25e66--link-faf6c434:hover {
+  text-decoration: underline;
+}
+.reset-3c756112--pageFooter-f1d5e2b0 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  margin-top: 64px;
+}
+@media print {
+  .reset-3c756112--pageFooter-f1d5e2b0 {
+    display: none;
+  }
+}
+.reset-3c756112--navPagesLinks-67bea901 {
+  display: -ms-grid;
+  width: auto;
+  margin: 0;
+  display: grid;
+  padding: 0;
+  -ms-grid-rows: auto;
+  grid-column-gap: 24px;
+  -ms-grid-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "previous next";
+  grid-template-columns: 1fr 1fr;
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--navPagesLinks-67bea901 {
+    grid-row-gap: 24px;
+    -ms-grid-columns: 1fr;
+    grid-template-areas: "next" "previous";
+    grid-template-columns: 1fr;
+  }
+}
+.reset-3c756112--card-6570f064--whiteCard-fff091a4--cardPrevious-56a5e674 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #242A31;
+  border: 1px solid #E6ECF1;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  grid-area: previous;
+  align-self: stretch;
+  box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.1);
+  transition: border 250ms ease;
+  align-items: center;
+  justify-self: stretch;
+  border-radius: 3px;
+  flex-direction: row;
+  -moz-transition: border 250ms ease;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  -webkit-box-align: center;
+  page-break-inside: avoid;
+  -ms-grid-row-align: stretch;
+  -webkit-box-orient: horizontal;
+  -webkit-transition: border 250ms ease;
+  -ms-grid-column-align: stretch;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--cardIcon-5b647d22 {
+  flex: 0 0 auto;
+  color: #9DAAB6;
+  margin: 0;
+  display: block;
+  padding: 16px;
+  font-size: 24px;
+  transition: color 250ms ease;
+  -moz-transition: color 250ms ease;
+  -webkit-transition: color 250ms ease;
+}
+.reset-3c756112--cardIcon-5b647d22:first-child {
+  padding-right: 0;
+}
+.reset-3c756112--cardIcon-5b647d22:last-child {
+  padding-left: 0;
+}
+.reset-3c756112--cardBody-25dca3b1--cardPreviousBody-79f02c06 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 16px;
+  text-align: right;
+}
+.reset-3c756112--cardHint-2c5d8183 {
+  color: #9DAAB6;
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+.text-4505230f--TextH200-a3425406--textContentFamily-49a318e1 {
+  font-size: 12px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.625;
+}
+.reset-3c756112--cardTitle-32aa092e {
+  margin: 0;
+  display: block;
+  padding: 0;
+  transition: color 250ms ease;
+  -moz-transition: color 250ms ease;
+  -webkit-transition: color 250ms ease;
+}
+.reset-3c756112--card-6570f064--whiteCard-fff091a4--cardNext-19241c42 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #242A31;
+  border: 1px solid #E6ECF1;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  grid-area: next;
+  align-self: stretch;
+  box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.1);
+  transition: border 250ms ease;
+  align-items: center;
+  justify-self: stretch;
+  border-radius: 3px;
+  flex-direction: row;
+  -moz-transition: border 250ms ease;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  -webkit-box-align: center;
+  page-break-inside: avoid;
+  -ms-grid-row-align: stretch;
+  -webkit-box-orient: horizontal;
+  -webkit-transition: border 250ms ease;
+  -ms-grid-column-align: stretch;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--cardBody-25dca3b1 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 16px;
+}
+.reset-3c756112--pageFooterColumns-ef8f347e {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  border-top: 2px solid #E6ECF1;
+  margin-top: 24px;
+  align-items: center;
+  padding-top: 24px;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--pageFooterColumns-ef8f347e {
+    align-items: stretch;
+    flex-direction: column;
+    -webkit-box-align: stretch;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+  }
+}
+.reset-3c756112--pageFooterSummary-12074aff {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+}
+@media screen and (max-width: 767px) {
+  .reset-3c756112--pageFooterSummary-12074aff {
+    margin-bottom: 16px;
+  }
+}
+.reset-3c756112--pageChangesSummary-08821678 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: auto;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  -webkit-box-align: center;
+}
+.reset-3c756112--pageContributors-5c59582e {
+  flex: 0 0 auto;
+  margin: 0;
+  display: block;
+  padding: 0;
+  margin-right: 8px;
+}
+.reset-3c756112--ownerAvatarList-696792ce {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  flex-direction: row-reverse;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+}
+@keyframes keyframes-animation-bd7e9c6a-0-1-3 {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.reset-3c756112--tooltipContainer-7fdb9b70--tooltipped-57ae51fe--bottom-f9ec01b8--small-2ec8ae1a--circle-6c5acd10--ownerAvatarStackListItem-1b188f0f--whiteOutline-6045f802 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  z-index: 0;
+  position: relative;
+  box-shadow: 0 0 0 2px white;
+  border-radius: 128px;
+}
+.reset-3c756112--tooltipContainer-7fdb9b70--tooltipped-57ae51fe--bottom-f9ec01b8--small-2ec8ae1a--circle-6c5acd10--ownerAvatarStackListItem-1b188f0f--whiteOutline-6045f802:after {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  top: calc(100% + 16px);
+  left: 50%;
+  color: #FFFFFF;
+  width: max-content;
+  bottom: auto;
+  content: attr(aria-label);
+  display: none;
+  opacity: 0;
+  padding: 5px 8px;
+  z-index: 155;
+  position: absolute;
+  font-size: 12px;
+  max-width: 300px;
+  transform: translateX(-50%);
+  background: #242A31;
+  font-weight: 400;
+  line-height: 1.625;
+  white-space: normal;
+  border-radius: 3px;
+  animation-name: keyframes-animation-bd7e9c6a-0-1-3;
+  pointer-events: none;
+  text-transform: none;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+}
+.reset-3c756112--tooltipContainer-7fdb9b70--tooltipped-57ae51fe--bottom-f9ec01b8--small-2ec8ae1a--circle-6c5acd10--ownerAvatarStackListItem-1b188f0f--whiteOutline-6045f802:before {
+  top: calc(100% + 8px);
+  left: 50%;
+  width: 0;
+  bottom: auto;
+  height: 0;
+  content: "";
+  display: none;
+  opacity: 0;
+  z-index: 156;
+  position: absolute;
+  transform: translateX(-50%);
+  border-color: #242A31 transparent;
+  border-style: solid;
+  animation-name: keyframes-animation-bd7e9c6a-0-1-3;
+  border-top-width: 0;
+  border-left-width: 8px;
+  animation-duration: 0.2s;
+  border-right-width: 8px;
+  animation-fill-mode: forwards;
+  border-bottom-width: 8px;
+}
+.reset-3c756112--tooltipContainer-7fdb9b70--tooltipped-57ae51fe--bottom-f9ec01b8--small-2ec8ae1a--circle-6c5acd10--ownerAvatarStackListItem-1b188f0f--whiteOutline-6045f802:nth-last-child(n+2) {
+  margin-left: -8px;
+}
+.reset-3c756112--tooltipContainer-7fdb9b70--tooltipped-57ae51fe--bottom-f9ec01b8--small-2ec8ae1a--circle-6c5acd10--ownerAvatarStackListItem-1b188f0f--whiteOutline-6045f802:hover:before {
+  display: block;
+}
+.reset-3c756112--tooltipContainer-7fdb9b70--tooltipped-57ae51fe--bottom-f9ec01b8--small-2ec8ae1a--circle-6c5acd10--ownerAvatarStackListItem-1b188f0f--whiteOutline-6045f802:hover:after {
+  display: block;
+}
+.reset-3c756112--avatarFrame-2f40cdc9--small-2ec8ae1a--circle-6c5acd10 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  -webkit-mask-image: -moz-radial-gradient(white, black);
+  mask-image: -webkit-radial-gradient(white, black);
+  mask-image: -moz-radial-gradient(white, black);
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  mask-image: radial-gradient(white, black);
+  align-items: center;
+  border-radius: 128px;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -webkit-mask-image: radial-gradient(white, black);
+}
+.image-67b14f24--avatar-1c1d03ec {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  background-size: cover;
+  background-color: #FFFFFF;
+  background-repeat: no-repeat;
+}
+.reset-3c756112--innerShadow-7a3a8651 {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: absolute;
+  box-shadow: inset 0 0 1px 1px rgba(24, 48, 85, 0.1);
+  border-radius: 128px;
+  pointer-events: none;
+}
+.reset-3c756112--pageEditedDate-b805c39a {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: auto;
+  color: #9DAAB6;
+  margin: 0;
+  display: flex;
+  padding: 0;
+}
+.reset-3c756112--pageSide-ad9fed26 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 0 0 auto;
+  width: 224px;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  position: relative;
+  margin-right: auto;
+}
+@media print {
+  .reset-3c756112--pageSide-ad9fed26 {
+    display: none;
+  }
+}
+@media screen and (max-width: 1279px) {
+  .reset-3c756112--pageSide-ad9fed26 {
+    display: none;
+  }
+}
+.reset-3c756112--stickyContainer-2bed3a82 {
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+  max-width: 100%;
+}
+.reset-3c756112--tocWrapper-506ea24c {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  padding-top: 40px;
+  flex-direction: column;
+  padding-bottom: 40px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114 {
+  overflow-y: auto;
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  -webkit-overflow-scrolling: touch;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-scrollbar-track {
+  background: none;
+  border-width: 0;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+  transition: background 250ms ease;
+  border-radius: 2px;
+  -moz-transition: background 250ms ease;
+  -webkit-transition: background 250ms ease;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-scrollbar-button {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-scrollbar-track-piece {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-scrollbar-corner {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114::-webkit-resizer {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114:hover::-webkit-scrollbar {
+  display: initial;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--scrollableContainer-756c9114:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+}
+.reset-3c756112--menu-5b8a7448--pageSideMenu-23bebfd3--pageSideSection-542f1fd5 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 0 0 auto;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  min-width: 220px;
+  margin-bottom: 24px;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+.reset-3c756112--menu-5b8a7448--pageSideMenu-23bebfd3--pageSideSection-542f1fd5:before {
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: " ";
+  position: absolute;
+  border-left: 1px solid #E6ECF1;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5 {
+  overflow-y: auto;
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  -webkit-overflow-scrolling: touch;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-scrollbar-track {
+  background: none;
+  border-width: 0;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+  transition: background 250ms ease;
+  border-radius: 2px;
+  -moz-transition: background 250ms ease;
+  -webkit-transition: background 250ms ease;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-scrollbar-button {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-scrollbar-track-piece {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-scrollbar-corner {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5::-webkit-resizer {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5:hover::-webkit-scrollbar {
+  display: initial;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageSideMenuItems-67c61496--pageSideSection-542f1fd5:before {
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: " ";
+  position: absolute;
+  border-left: 1px solid #E6ECF1;
+}
+.reset-3c756112--menuItem-aa02f6ec--menuItemLight-757d5235--menuItemInline-173bdf97--pageSideMenuItem-22949732 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #242A31;
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  padding: 4px 16px;
+  align-items: center;
+  padding-left: 24px;
+  vertical-align: middle;
+  text-decoration: none;
+  -webkit-box-align: center;
+}
+.reset-3c756112--menuItem-aa02f6ec--menuItemLight-757d5235--menuItemInline-173bdf97--pageSideMenuItem-22949732:hover {
+  background: #F5F7F9;
+}
+.reset-3c756112--menuItemIcon-206eb252 {
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  color: #9DAAB6;
+  margin: 0;
+  display: inline-flex;
+  padding: 0;
+  font-size: 18px;
+  margin-right: 8px;
+}
+.reset-3c756112--menuItemContent-c44ec79e {
+  margin: 0;
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.text-4505230f--UIH300-2063425d--textUIFamily-5ebd8e40 {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.reset-3c756112--pageSideSection-542f1fd5 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+}
+.reset-3c756112--pageSideSection-542f1fd5:before {
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: " ";
+  position: absolute;
+  border-left: 1px solid #E6ECF1;
+}
+.reset-3c756112--menu-5b8a7448--pageToc-16c35922--pageTocLive-542f1fd5 {
+  display: -webkit-box;
+  flex: 1;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  min-width: 224px;
+  counter-reset: toc;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+@media print {
+  .reset-3c756112--menu-5b8a7448--pageToc-16c35922--pageTocLive-542f1fd5 {
+    display: none;
+  }
+}
+.reset-3c756112--menu-5b8a7448--pageToc-16c35922--pageTocLive-542f1fd5:before {
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: " ";
+  position: absolute;
+  border-left: 1px solid #E6ECF1;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496 {
+  overflow-y: auto;
+  flex: 1;
+  margin: 0;
+  display: block;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  -webkit-overflow-scrolling: touch;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-scrollbar-track {
+  background: none;
+  border-width: 0;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+  transition: background 250ms ease;
+  border-radius: 2px;
+  -moz-transition: background 250ms ease;
+  -webkit-transition: background 250ms ease;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-scrollbar-button {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-scrollbar-track-piece {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-scrollbar-corner {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496::-webkit-resizer {
+  display: none;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496:hover::-webkit-scrollbar {
+  display: initial;
+}
+.reset-3c756112--withScrollbar-39338630--scrollAxisY-7680295e--menuItems-2e6f017b--pageTocLiveItems-67c61496:hover::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.16);
+}
+.reset-3c756112--menuHeader-342906de--menuHeaderLight-2c5d8183 {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  color: #9DAAB6;
+  margin: 0;
+  display: flex;
+  padding: 0;
+  padding-left: 24px;
+  margin-bottom: 8px;
+}
+.reset-3c756112--menuHeaderIcon-0c3ed569 {
+  margin: 0;
+  display: block;
+  padding: 0;
+  margin-right: 8px;
+}
+.text-4505230f--InfoH100-1e92e1d1--textContentFamily-49a318e1 {
+  font-size: 10px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.reset-3c756112--menuItem-aa02f6ec--menuItemLight-757d5235--menuItemInline-173bdf97--pageTocItem-f4427024 {
+  display: -webkit-box;
+  color: #74818D;
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  padding: 4px 16px;
+  align-items: center;
+  padding-left: 24px;
+  vertical-align: middle;
+  text-decoration: none;
+  -webkit-box-align: center;
+}
+.reset-3c756112--menuItem-aa02f6ec--menuItemLight-757d5235--menuItemInline-173bdf97--pageTocItem-f4427024:hover {
+  background: none;
+  text-decoration: inherit;
+}
+.link-a079aa82--primary-53a25e66 {
+  color: #3884FF;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.text-4505230f--UIH300-2063425d--textContentFamily-49a318e1 {
+  font-size: 14px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.text-4505230f--UIH200-50ead35f--textContentFamily-49a318e1 {
+  font-size: 12px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.text-4505230f--UIH200-50ead35f--textContentFamily-49a318e1--pageTocLinkH2-2294976c {
+  font-size: 12px;
+  font-family: Content-font, Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  padding-left: 16px;
+}
+.reset-3c756112--pendingTransitionBar-4d0ba35e--none-905a1220 {
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  margin: 0;
+  display: none;
+  padding: 0;
+  z-index: 1000;
+  position: fixed;
+  background: #1F65D6;
+  animation-fill-mode: both;
+}
+</style>
+
+</head>
+        <body>
+            
+        
+			<h1 class="reset-3c756112--pageTitle-33dc39a3"><span class="text-4505230f--DisplayH900-bfb998fa--textContentFamily-49a318e1">Why TypeScript</span></h1>
+			
+
+			<div class="reset-3c756112--toaster-c029690e"></div><div class="reset-3c756112--pageBody-a91db4ac"><div data-editioncontainer="true" class="reset-3c756112--container-960c7c26"><div data-slate-editor="true" data-key="5647d05612f84b8d9fa3d888f37e253f" autocorrect="on" spellcheck="true" data-gramm="false" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word;"><p class="blockParagraph-544a408c" data-key="1eb64357b00c4f449222bfefb2c284cb">
+			
+			<span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="5dfddc7abe724d2f9389694f2169ff79"><span data-offset-key="5dfddc7abe724d2f9389694f2169ff79:0">There are two main goals of TypeScript:</span></span></span></p><ul class="list-20526648" data-key="f128bcd3cd284b9d8572721454ab0fd6"><li class=""><div data-key="6c74bfe43dfc4850887ea0777393fca3" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="db4e5fc767e8400a8e6165f2ca6f24db"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="ff3e0861f8054e4c978de25c233b1a4f"><span data-offset-key="ff3e0861f8054e4c978de25c233b1a4f:0">Provide an </span><span data-offset-key="ff3e0861f8054e4c978de25c233b1a4f:1"><em data-slate-leaf="true">optional type system</em></span><span data-offset-key="ff3e0861f8054e4c978de25c233b1a4f:2"> for JavaScript.</span></span></span></p></div></li><li class=""><div data-key="ee73ccace8ef4998816927a1c1bcd68d" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="0844c33a1d85427eaf650c3381fabd5b"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="f3810b4da6af47b79c82a9916e9d2e60"><span data-offset-key="f3810b4da6af47b79c82a9916e9d2e60:0">Provide planned features from future JavaScript editions to current JavaScript engines</span></span></span></p></div></li></ul><p class="blockParagraph-544a408c" data-key="689260c096ff42008cc042c787fd8857"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="49aa0280f2cb43b6866571d8324be6f5"><span data-offset-key="49aa0280f2cb43b6866571d8324be6f5:0">The desire for these goals is motivated below.</span></span></span></p><h1 id="the-typescript-type-system" class="blockHeading-442b4f12--blockHeading1WithMargin-b69d755e" data-key="fc224f2cde7c49ed849f988e685d7983"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH700-04e1a2a3--textContentFamily-49a318e1"><span data-key="5ec30b7e33854a5792bd7a46399beda4"><span data-offset-key="5ec30b7e33854a5792bd7a46399beda4:0">The TypeScript type system</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#the-typescript-type-system" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div><div role="button" tabindex="0" contenteditable="false" class="reset-3c756112--blockHeadingUp-c32402b2" style="color: rgb(56, 132, 255);"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></g></svg></div></h1><p class="blockParagraph-544a408c" data-key="f0221e14a71446b5944810065bc92d18"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="4ea5c71cb2494dc58dfe263f66c45c13"><span data-offset-key="4ea5c71cb2494dc58dfe263f66c45c13:0">You might be wondering "</span><span data-offset-key="4ea5c71cb2494dc58dfe263f66c45c13:1"><strong class="bold-3c254bd9" data-slate-leaf="true">Why add types to JavaScript?</strong></span><span data-offset-key="4ea5c71cb2494dc58dfe263f66c45c13:2">"</span></span></span></p><p class="blockParagraph-544a408c" data-key="4d1dd0b0d1b24ce3ba938a894d4dc67e"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="71b526306bc6446483b0a6e274fc6ddf"><span data-offset-key="71b526306bc6446483b0a6e274fc6ddf:0">Types have proven ability to enhance code quality and understandability. Large teams (Google, Microsoft, Facebook) have continually arrived at this conclusion. Specifically:</span></span></span></p><ul class="list-20526648" data-key="00a92733063245979a6bbb2d684c6bf8"><li class=""><div data-key="686be66017cf479e8aaacc4b6667edc6" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="50d146f5d09244f28455307ad99a3f6f"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="d885d2ff6dab4c02a8e6f4cb95ddcef7"><span data-offset-key="d885d2ff6dab4c02a8e6f4cb95ddcef7:0">Types increase your agility when doing refactoring. </span><span data-offset-key="d885d2ff6dab4c02a8e6f4cb95ddcef7:1"><em data-slate-leaf="true">It's better for the compiler to catch errors than to have things fail at runtime</em></span><span data-offset-key="d885d2ff6dab4c02a8e6f4cb95ddcef7:2">.</span></span></span></p></div></li><li class=""><div data-key="eb6d3bbade8f456f8e0aae03bb66502e" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="06bc0d132620422d9627b8d24e34eb2f"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="85a712935ad449939c808b11d572a3dc"><span data-offset-key="85a712935ad449939c808b11d572a3dc:0">Types are one of the best forms of documentation you can have. </span><span data-offset-key="85a712935ad449939c808b11d572a3dc:1"><em data-slate-leaf="true">The function signature is a theorem and the function body is the proof</em></span><span data-offset-key="85a712935ad449939c808b11d572a3dc:2">.</span></span></span></p></div></li></ul><p class="blockParagraph-544a408c" data-key="316cf62ae58f49e2bdf957a03cd37107"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="c71352a40d70457d8838668ceab4632a"><span data-offset-key="c71352a40d70457d8838668ceab4632a:0">However, types have a way of being unnecessarily ceremonious. TypeScript is very particular about keeping the barrier to entry as low as possible. Here's how:</span></span></span></p><h2 id="your-javascript-is-typescript" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="a7ab06a72bbe4a44b804e203d00e2da3"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="e9d32fac4f3f44d9aaaf602084deb4f3"><span data-offset-key="e9d32fac4f3f44d9aaaf602084deb4f3:0">Your JavaScript is TypeScript</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#your-javascript-is-typescript" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="4d1894d84b2846aea46ef42e4c64dd55"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="53b268158083456298bbc48251f64b92"><span data-offset-key="53b268158083456298bbc48251f64b92:0">TypeScript provides compile time type safety for your JavaScript code. This is no surprise given its name. The great thing is that the types are completely optional. Your JavaScript code </span><span data-offset-key="53b268158083456298bbc48251f64b92:1"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">.js</code></span><span data-offset-key="53b268158083456298bbc48251f64b92:2"> file can be renamed to a </span><span data-offset-key="53b268158083456298bbc48251f64b92:3"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">.ts</code></span><span data-offset-key="53b268158083456298bbc48251f64b92:4"> file and TypeScript will still give you back valid </span><span data-offset-key="53b268158083456298bbc48251f64b92:5"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">.js</code></span><span data-offset-key="53b268158083456298bbc48251f64b92:6"> equivalent to the original JavaScript file. TypeScript is </span><span data-offset-key="53b268158083456298bbc48251f64b92:7"><em data-slate-leaf="true">intentionally</em></span><span data-offset-key="53b268158083456298bbc48251f64b92:8"> and strictly a superset of JavaScript with optional Type checking.</span></span></span></p><h2 id="types-can-be-implicit" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="c1b541317781456ca383cacdb14c1a97"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="648aadbf4153407983a2d3cd3a437bba"><span data-offset-key="648aadbf4153407983a2d3cd3a437bba:0">Types can be Implicit</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#types-can-be-implicit" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="a4fb2eeef2374c8c807bd0111dbb2d14"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="55af230745ee419aad8e402fb6eebd12"><span data-offset-key="55af230745ee419aad8e402fb6eebd12:0">TypeScript will try to infer as much of the type information as it can in order to give you type safety with minimal cost of productivity during code development. For example, in the following example TypeScript will know that foo is of type </span><span data-offset-key="55af230745ee419aad8e402fb6eebd12:1"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">number</code></span><span data-offset-key="55af230745ee419aad8e402fb6eebd12:2"> below and will give an error on the second line as shown:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="a4e51408248541eb9a6a6751e93cb5bb" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="893be9c50fd14c619c64fa730222e78f"><span data-key="c8912fb739fd49c2919f0230d6faaee6"><span data-offset-key="c8912fb739fd49c2919f0230d6faaee6:0"><span class="prism-token token  keyword ">var</span></span><span data-offset-key="c8912fb739fd49c2919f0230d6faaee6:1"><span class="prism-token token 1"> foo </span></span><span data-offset-key="c8912fb739fd49c2919f0230d6faaee6:2"><span class="prism-token token 2 operator ">=</span></span><span data-offset-key="c8912fb739fd49c2919f0230d6faaee6:3"><span class="prism-token token 3"> </span></span><span data-offset-key="c8912fb739fd49c2919f0230d6faaee6:4"><span class="prism-token token 4 number ">123</span></span><span data-offset-key="c8912fb739fd49c2919f0230d6faaee6:5"><span class="prism-token token 5 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="abd39af5ac9f431991bb75b4e882ca68"><span data-key="04f5587205da416483cf057580094a7c"><span data-offset-key="04f5587205da416483cf057580094a7c:0"><span class="prism-token token 6">foo </span></span><span data-offset-key="04f5587205da416483cf057580094a7c:1"><span class="prism-token token 7 operator ">=</span></span><span data-offset-key="04f5587205da416483cf057580094a7c:2"><span class="prism-token token 8"> </span></span><span data-offset-key="04f5587205da416483cf057580094a7c:3"><span class="prism-token token 9 string ">'456'</span></span><span data-offset-key="04f5587205da416483cf057580094a7c:4"><span class="prism-token token 10 punctuation ">;</span></span><span data-offset-key="04f5587205da416483cf057580094a7c:5"><span class="prism-token token 11"> </span></span><span data-offset-key="04f5587205da416483cf057580094a7c:6"><span class="prism-token token 12 comment ">// Error: cannot assign `string` to `number`</span></span></span></div><div class="codeLine-a3169fbc" data-key="d694b47f0e984117a4dffb0572e1c576"><span data-key="4c1995b40d4049a7b5dd0f5562120db6"><span data-offset-key="4c1995b40d4049a7b5dd0f5562120db6:0"><span data-slate-zero-width="n">​</span></span></span></div><div class="codeLine-a3169fbc" data-key="6686a1675c664c70b3065bcf3d49faef"><span data-key="c80a8908a6c547e09fa9cfd0de83e445"><span data-offset-key="c80a8908a6c547e09fa9cfd0de83e445:0"><span class="prism-token token 14 comment ">// Is foo a number or a string?</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="0a6604a856f84a778e9089dabf29e287"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="d7c48ffc4d1442f0ab7b12430370d6ef"><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:0">This type inference is well motivated. If you do stuff like shown in this example, then, in the rest of your code, you cannot be certain that </span><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:1"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">foo</code></span><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:2"> is a </span><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:3"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">number</code></span><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:4"> or a </span><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:5"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">string</code></span><span data-offset-key="d7c48ffc4d1442f0ab7b12430370d6ef:6">. Such issues turn up often in large multi-file code bases. We will deep dive into the type inference rules later.</span></span></span></p><h2 id="types-can-be-explicit" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="0cbe83ff40994b3aaa245ab1e7c821c4"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="00a6c3cb5e6e4154af7ce9a3d3953a55"><span data-offset-key="00a6c3cb5e6e4154af7ce9a3d3953a55:0">Types can be Explicit</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#types-can-be-explicit" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="3aec93ade7a5429fa7c91a9f14c857b7"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="bd91987bf86e45478eeae6188269878d"><span data-offset-key="bd91987bf86e45478eeae6188269878d:0">As we've mentioned before, TypeScript will infer as much as it can safely. However, you can use annotations to:</span></span></span></p><ol class="list-20526648" data-key="8d32ef9eaf7c42f88e7f971247c80c19"><li class=""><div data-key="6909ac6cb6e242c580e89d71167cceab" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="cca8bc4aa2724d1b8fde8e84d17562f2"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="95f937d0b02247a9a3526cf6ae822615"><span data-offset-key="95f937d0b02247a9a3526cf6ae822615:0">Help along the compiler, and more importantly document stuff for the next developer who has to read your code (that might be future you!).</span></span></span></p></div></li><li class=""><div data-key="67c578a712fb42748b1cea089cf21745" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="cd7192600314469fa24589b4e2463e54"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="4f9670c5e9c7440784235cb5e0b2c550"><span data-offset-key="4f9670c5e9c7440784235cb5e0b2c550:0">Enforce that what the compiler sees, is what you thought it should see. That is your understanding of the code matches an algorithmic analysis of the code (done by the compiler).</span></span></span></p></div></li></ol><p class="blockParagraph-544a408c" data-key="e118e5db647c4151886dd9c1175d5f9d"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="686ea70423ad4514a922794570f5ce74"><span data-offset-key="686ea70423ad4514a922794570f5ce74:0">TypeScript uses postfix type annotations popular in other </span><span data-offset-key="686ea70423ad4514a922794570f5ce74:1"><em data-slate-leaf="true">optionally</em></span><span data-offset-key="686ea70423ad4514a922794570f5ce74:2"> annotated languages (e.g. ActionScript and F#).</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="e8c65cbaab774cad88f8c7d78f1a3291" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="289d7e0fa89b458f9834ca2be3476c4f"><span data-key="33d7702701a64222bc87c7ade5434daa"><span data-offset-key="33d7702701a64222bc87c7ade5434daa:0"><span class="prism-token token  keyword ">var</span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:1"><span class="prism-token token 1"> foo</span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:2"><span class="prism-token token 2 punctuation ">:</span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:3"><span class="prism-token token 3"> </span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:4"><span class="prism-token token 4 builtin ">number</span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:5"><span class="prism-token token 5"> </span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:6"><span class="prism-token token 6 operator ">=</span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:7"><span class="prism-token token 7"> </span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:8"><span class="prism-token token 8 number ">123</span></span><span data-offset-key="33d7702701a64222bc87c7ade5434daa:9"><span class="prism-token token 9 punctuation ">;</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="da5d8c0e096642afa2f84f8c0e57f458"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="0758df11d5bc42fcbbd69f0e49fecde6"><span data-offset-key="0758df11d5bc42fcbbd69f0e49fecde6:0">So if you do something wrong the compiler will report an error e.g.:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="6650d747ac194510a5c05fe47b144e33" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="b36aec9cfd804686b5e880a2ab0624ce"><span data-key="a9846db2620f40e3ad3013eef5529d4c"><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:0"><span class="prism-token token  keyword ">var</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:1"><span class="prism-token token 1"> foo</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:2"><span class="prism-token token 2 punctuation ">:</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:3"><span class="prism-token token 3"> </span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:4"><span class="prism-token token 4 builtin ">number</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:5"><span class="prism-token token 5"> </span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:6"><span class="prism-token token 6 operator ">=</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:7"><span class="prism-token token 7"> </span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:8"><span class="prism-token token 8 string ">'123'</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:9"><span class="prism-token token 9 punctuation ">;</span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:10"><span class="prism-token token 10"> </span></span><span data-offset-key="a9846db2620f40e3ad3013eef5529d4c:11"><span class="prism-token token 11 comment ">// Error: cannot assign a `string` to a `number`</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="69def2f84e564c0bb46aab20e194145f"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="4082d26ccded4803958ef733b0f253ea"><span data-offset-key="4082d26ccded4803958ef733b0f253ea:0">We will discuss all the details of all the annotation syntax supported by TypeScript in a later chapter.</span></span></span></p><h2 id="types-are-structural" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="381b8dd032fd4e96931cb50d02f20e09"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="07a56ccb0dec42b2b7df26a31c323991"><span data-offset-key="07a56ccb0dec42b2b7df26a31c323991:0">Types are structural</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#types-are-structural" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="6708a17820214ad98a8c8984309613df"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="9021eab80be9488bb618dc86456e09c5"><span data-offset-key="9021eab80be9488bb618dc86456e09c5:0">In some languages (specifically nominally typed ones) static typing results in unnecessary ceremony because even though </span><span data-offset-key="9021eab80be9488bb618dc86456e09c5:1"><em data-slate-leaf="true">you know</em></span><span data-offset-key="9021eab80be9488bb618dc86456e09c5:2"> that the code will work fine the language semantics force you to copy stuff around. This is why stuff like </span></span><a class="link-a079aa82--primary-53a25e66--link-faf6c434" href="http://automapper.org/" target="_blank" rel="noopener noreferrer" data-key="044c7e8dd5df4a5092cdea2b75e73577" style="color: rgb(56, 132, 255);"><span data-key="ceea1f6a061c4b7dbaa2e3e0c376e704"><span data-offset-key="ceea1f6a061c4b7dbaa2e3e0c376e704:0">automapper for C#</span></span></a><span data-key="a09514b13c724fb897b753558a46726a"><span data-offset-key="a09514b13c724fb897b753558a46726a:0"> is </span><span data-offset-key="a09514b13c724fb897b753558a46726a:1"><em data-slate-leaf="true">vital</em></span><span data-offset-key="a09514b13c724fb897b753558a46726a:2"> for C#. In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are </span><span data-offset-key="a09514b13c724fb897b753558a46726a:3"><em data-slate-leaf="true">structural</em></span><span data-offset-key="a09514b13c724fb897b753558a46726a:4">. This means that </span><span data-offset-key="a09514b13c724fb897b753558a46726a:5"><em data-slate-leaf="true">duck typing</em></span><span data-offset-key="a09514b13c724fb897b753558a46726a:6"> is a first class language construct. Consider the following example. The function </span><span data-offset-key="a09514b13c724fb897b753558a46726a:7"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">iTakePoint2D</code></span><span data-offset-key="a09514b13c724fb897b753558a46726a:8"> will accept anything that contains all the things (</span><span data-offset-key="a09514b13c724fb897b753558a46726a:9"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">x</code></span><span data-offset-key="a09514b13c724fb897b753558a46726a:10"> and </span><span data-offset-key="a09514b13c724fb897b753558a46726a:11"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">y</code></span><span data-offset-key="a09514b13c724fb897b753558a46726a:12">) it expects:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="00cc89978e8847598effb4b748251ed2" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="c872c7c6480c44aeb942883cbfe84a12"><span data-key="a361865ebdcd4ef0bcd82a92ae7a3a33"><span data-offset-key="a361865ebdcd4ef0bcd82a92ae7a3a33:0"><span class="prism-token token  keyword ">interface</span></span><span data-offset-key="a361865ebdcd4ef0bcd82a92ae7a3a33:1"><span class="prism-token token 1"> </span></span><span data-offset-key="a361865ebdcd4ef0bcd82a92ae7a3a33:2"><span class="prism-token token 2 class-name ">Point2D</span></span><span data-offset-key="a361865ebdcd4ef0bcd82a92ae7a3a33:3"><span class="prism-token token 3"> </span></span><span data-offset-key="a361865ebdcd4ef0bcd82a92ae7a3a33:4"><span class="prism-token token 4 punctuation ">{</span></span></span></div><div class="codeLine-a3169fbc" data-key="b608310e25fc437bab9f0f877700bed2"><span data-key="0561b8892f8a4da4952ca10eedffba15"><span data-offset-key="0561b8892f8a4da4952ca10eedffba15:0"><span class="prism-token token 5">    x</span></span><span data-offset-key="0561b8892f8a4da4952ca10eedffba15:1"><span class="prism-token token 6 punctuation ">:</span></span><span data-offset-key="0561b8892f8a4da4952ca10eedffba15:2"><span class="prism-token token 7"> </span></span><span data-offset-key="0561b8892f8a4da4952ca10eedffba15:3"><span class="prism-token token 8 builtin ">number</span></span><span data-offset-key="0561b8892f8a4da4952ca10eedffba15:4"><span class="prism-token token 9 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="9b2ff7b23b4840898f9c8d277d7e8ebe"><span data-key="0168fed28bdf407e81a5ce14487a2e91"><span data-offset-key="0168fed28bdf407e81a5ce14487a2e91:0"><span class="prism-token token 10">    y</span></span><span data-offset-key="0168fed28bdf407e81a5ce14487a2e91:1"><span class="prism-token token 11 punctuation ">:</span></span><span data-offset-key="0168fed28bdf407e81a5ce14487a2e91:2"><span class="prism-token token 12"> </span></span><span data-offset-key="0168fed28bdf407e81a5ce14487a2e91:3"><span class="prism-token token 13 builtin ">number</span></span><span data-offset-key="0168fed28bdf407e81a5ce14487a2e91:4"><span class="prism-token token 14 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="7602d9b270e54e269fed13e2c61e0373"><span data-key="e1e3d1ef624941fd9c44ecc3c677e29e"><span data-offset-key="e1e3d1ef624941fd9c44ecc3c677e29e:0"><span class="prism-token token 16 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="f546b0425e3a4aab89423430be2be549"><span data-key="2d798127aa3c4e4cbea775136e93b04e"><span data-offset-key="2d798127aa3c4e4cbea775136e93b04e:0"><span class="prism-token token 18 keyword ">interface</span></span><span data-offset-key="2d798127aa3c4e4cbea775136e93b04e:1"><span class="prism-token token 19"> </span></span><span data-offset-key="2d798127aa3c4e4cbea775136e93b04e:2"><span class="prism-token token 20 class-name ">Point3D</span></span><span data-offset-key="2d798127aa3c4e4cbea775136e93b04e:3"><span class="prism-token token 21"> </span></span><span data-offset-key="2d798127aa3c4e4cbea775136e93b04e:4"><span class="prism-token token 22 punctuation ">{</span></span></span></div><div class="codeLine-a3169fbc" data-key="3a882f11fa024f82be902a2b11c55a8c"><span data-key="78632cc2f5b5414d8967e354803b0f4c"><span data-offset-key="78632cc2f5b5414d8967e354803b0f4c:0"><span class="prism-token token 23">    x</span></span><span data-offset-key="78632cc2f5b5414d8967e354803b0f4c:1"><span class="prism-token token 24 punctuation ">:</span></span><span data-offset-key="78632cc2f5b5414d8967e354803b0f4c:2"><span class="prism-token token 25"> </span></span><span data-offset-key="78632cc2f5b5414d8967e354803b0f4c:3"><span class="prism-token token 26 builtin ">number</span></span><span data-offset-key="78632cc2f5b5414d8967e354803b0f4c:4"><span class="prism-token token 27 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="808476ee5a3d4cbd89f7b681288954ff"><span data-key="049af11f991d47bfb18b32b483c84dba"><span data-offset-key="049af11f991d47bfb18b32b483c84dba:0"><span class="prism-token token 28">    y</span></span><span data-offset-key="049af11f991d47bfb18b32b483c84dba:1"><span class="prism-token token 29 punctuation ">:</span></span><span data-offset-key="049af11f991d47bfb18b32b483c84dba:2"><span class="prism-token token 30"> </span></span><span data-offset-key="049af11f991d47bfb18b32b483c84dba:3"><span class="prism-token token 31 builtin ">number</span></span><span data-offset-key="049af11f991d47bfb18b32b483c84dba:4"><span class="prism-token token 32 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="8cc3a77d9d46449e84ad7365dc79766a"><span data-key="c359b28e0c65410a9691a252eb4a63ec"><span data-offset-key="c359b28e0c65410a9691a252eb4a63ec:0"><span class="prism-token token 33">    z</span></span><span data-offset-key="c359b28e0c65410a9691a252eb4a63ec:1"><span class="prism-token token 34 punctuation ">:</span></span><span data-offset-key="c359b28e0c65410a9691a252eb4a63ec:2"><span class="prism-token token 35"> </span></span><span data-offset-key="c359b28e0c65410a9691a252eb4a63ec:3"><span class="prism-token token 36 builtin ">number</span></span><span data-offset-key="c359b28e0c65410a9691a252eb4a63ec:4"><span class="prism-token token 37 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="19928aaf0a8e467f8c606f1930b9102e"><span data-key="312c703712bb4fcc8ffe839ed6909e29"><span data-offset-key="312c703712bb4fcc8ffe839ed6909e29:0"><span class="prism-token token 39 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="22e4bd9eebb84886a12aaceacc85c6e3"><span data-key="0d6ff3a0665947a7ad700f5ab5c76bfc"><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:0"><span class="prism-token token 41 keyword ">var</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:1"><span class="prism-token token 42"> point2D</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:2"><span class="prism-token token 43 punctuation ">:</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:3"><span class="prism-token token 44"> Point2D </span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:4"><span class="prism-token token 45 operator ">=</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:5"><span class="prism-token token 46"> </span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:6"><span class="prism-token token 47 punctuation ">{</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:7"><span class="prism-token token 48"> x</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:8"><span class="prism-token token 49 punctuation ">:</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:9"><span class="prism-token token 50"> </span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:10"><span class="prism-token token 51 number ">0</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:11"><span class="prism-token token 52 punctuation ">,</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:12"><span class="prism-token token 53"> y</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:13"><span class="prism-token token 54 punctuation ">:</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:14"><span class="prism-token token 55"> </span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:15"><span class="prism-token token 56 number ">10</span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:16"><span class="prism-token token 57"> </span></span><span data-offset-key="0d6ff3a0665947a7ad700f5ab5c76bfc:17"><span class="prism-token token 58 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="41d62868dcdf485aaf8c05213bbe4f4b"><span data-key="dd925042d57b41d7bc13d73df6b15c32"><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:0"><span class="prism-token token 60 keyword ">var</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:1"><span class="prism-token token 61"> point3D</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:2"><span class="prism-token token 62 punctuation ">:</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:3"><span class="prism-token token 63"> Point3D </span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:4"><span class="prism-token token 64 operator ">=</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:5"><span class="prism-token token 65"> </span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:6"><span class="prism-token token 66 punctuation ">{</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:7"><span class="prism-token token 67"> x</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:8"><span class="prism-token token 68 punctuation ">:</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:9"><span class="prism-token token 69"> </span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:10"><span class="prism-token token 70 number ">0</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:11"><span class="prism-token token 71 punctuation ">,</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:12"><span class="prism-token token 72"> y</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:13"><span class="prism-token token 73 punctuation ">:</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:14"><span class="prism-token token 74"> </span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:15"><span class="prism-token token 75 number ">10</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:16"><span class="prism-token token 76 punctuation ">,</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:17"><span class="prism-token token 77"> z</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:18"><span class="prism-token token 78 punctuation ">:</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:19"><span class="prism-token token 79"> </span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:20"><span class="prism-token token 80 number ">20</span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:21"><span class="prism-token token 81"> </span></span><span data-offset-key="dd925042d57b41d7bc13d73df6b15c32:22"><span class="prism-token token 82 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="492db3d9bd0245c0a4634e403365560d"><span data-key="b54d3457b9e24aa39bea67ff49fe334b"><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:0"><span class="prism-token token 84 keyword ">function</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:1"><span class="prism-token token 85"> </span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:2"><span class="prism-token token 86 function ">iTakePoint2D</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:3"><span class="prism-token token 87 punctuation ">(</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:4"><span class="prism-token token 88">point</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:5"><span class="prism-token token 89 punctuation ">:</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:6"><span class="prism-token token 90"> Point2D</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:7"><span class="prism-token token 91 punctuation ">)</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:8"><span class="prism-token token 92"> </span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:9"><span class="prism-token token 93 punctuation ">{</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:10"><span class="prism-token token 94"> </span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:11"><span class="prism-token token 95 comment ">/* do something */</span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:12"><span class="prism-token token 96"> </span></span><span data-offset-key="b54d3457b9e24aa39bea67ff49fe334b:13"><span class="prism-token token 97 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="b7cf15a5eadb4ccab10a4deef51996b5"><span data-key="2fc5f439d14c4deda11e01390bcc3a28"><span data-offset-key="2fc5f439d14c4deda11e01390bcc3a28:0"><span data-slate-zero-width="n">​</span></span></span></div><div class="codeLine-a3169fbc" data-key="509f2e3b750440338fa72ddf28cc0baf"><span data-key="6b40684ccb6e4bb1a9741c5ccb558c08"><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:0"><span class="prism-token token 99 function ">iTakePoint2D</span></span><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:1"><span class="prism-token token 100 punctuation ">(</span></span><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:2"><span class="prism-token token 101">point2D</span></span><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:3"><span class="prism-token token 102 punctuation ">)</span></span><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:4"><span class="prism-token token 103 punctuation ">;</span></span><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:5"><span class="prism-token token 104"> </span></span><span data-offset-key="6b40684ccb6e4bb1a9741c5ccb558c08:6"><span class="prism-token token 105 comment ">// exact match okay</span></span></span></div><div class="codeLine-a3169fbc" data-key="c500ccbc1e964d9cbc4e9f08867cd128"><span data-key="1e5f4910a8ea4c009e51ccafca5eba1d"><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:0"><span class="prism-token token 107 function ">iTakePoint2D</span></span><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:1"><span class="prism-token token 108 punctuation ">(</span></span><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:2"><span class="prism-token token 109">point3D</span></span><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:3"><span class="prism-token token 110 punctuation ">)</span></span><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:4"><span class="prism-token token 111 punctuation ">;</span></span><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:5"><span class="prism-token token 112"> </span></span><span data-offset-key="1e5f4910a8ea4c009e51ccafca5eba1d:6"><span class="prism-token token 113 comment ">// extra information okay</span></span></span></div><div class="codeLine-a3169fbc" data-key="7754e21f0db44e7192cfaa60976c2a75"><span data-key="369f0aab002a44e2af32fd27bbd580b4"><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:0"><span class="prism-token token 115 function ">iTakePoint2D</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:1"><span class="prism-token token 116 punctuation ">(</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:2"><span class="prism-token token 117 punctuation ">{</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:3"><span class="prism-token token 118"> x</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:4"><span class="prism-token token 119 punctuation ">:</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:5"><span class="prism-token token 120"> </span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:6"><span class="prism-token token 121 number ">0</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:7"><span class="prism-token token 122"> </span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:8"><span class="prism-token token 123 punctuation ">}</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:9"><span class="prism-token token 124 punctuation ">)</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:10"><span class="prism-token token 125 punctuation ">;</span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:11"><span class="prism-token token 126"> </span></span><span data-offset-key="369f0aab002a44e2af32fd27bbd580b4:12"><span class="prism-token token 127 comment ">// Error: missing information `y`</span></span></span></div></pre></div><h2 id="type-errors-do-not-prevent-javascript-emit" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="25d95b65cd594d7fbcb77778b129b521"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="d7c99303ad2f4ef6859152fcd62ad2ab"><span data-offset-key="d7c99303ad2f4ef6859152fcd62ad2ab:0">Type errors do not prevent JavaScript emit</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#type-errors-do-not-prevent-javascript-emit" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="b6e0c591e30f4e7497fa911dc0a90501"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="d040582c2c88417f94ea90ff64ce3114"><span data-offset-key="d040582c2c88417f94ea90ff64ce3114:0">To make it easy for you to migrate your JavaScript code to TypeScript, even if there are compilation errors, by default TypeScript </span><span data-offset-key="d040582c2c88417f94ea90ff64ce3114:1"><em data-slate-leaf="true">will emit valid JavaScript</em></span><span data-offset-key="d040582c2c88417f94ea90ff64ce3114:2"> the best that it can. e.g.</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="91f04a2f6728448797cd8a60d82ec2db" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="e55e9297839c4feb8adb8f52c6ef2246"><span data-key="ce91adb8289642a2a8c774ebdcec4f5d"><span data-offset-key="ce91adb8289642a2a8c774ebdcec4f5d:0"><span class="prism-token token  keyword ">var</span></span><span data-offset-key="ce91adb8289642a2a8c774ebdcec4f5d:1"><span class="prism-token token 1"> foo </span></span><span data-offset-key="ce91adb8289642a2a8c774ebdcec4f5d:2"><span class="prism-token token 2 operator ">=</span></span><span data-offset-key="ce91adb8289642a2a8c774ebdcec4f5d:3"><span class="prism-token token 3"> </span></span><span data-offset-key="ce91adb8289642a2a8c774ebdcec4f5d:4"><span class="prism-token token 4 number ">123</span></span><span data-offset-key="ce91adb8289642a2a8c774ebdcec4f5d:5"><span class="prism-token token 5 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="f6a263fe59eb44fb8bd1284212161418"><span data-key="9de5e8db36e8465fa50cc970a5b032b8"><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:0"><span class="prism-token token 6">foo </span></span><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:1"><span class="prism-token token 7 operator ">=</span></span><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:2"><span class="prism-token token 8"> </span></span><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:3"><span class="prism-token token 9 string ">'456'</span></span><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:4"><span class="prism-token token 10 punctuation ">;</span></span><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:5"><span class="prism-token token 11"> </span></span><span data-offset-key="9de5e8db36e8465fa50cc970a5b032b8:6"><span class="prism-token token 12 comment ">// Error: cannot assign a `string` to a `number`</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="a77fd2f158d34219b460345d977e4ed4"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="0ede849064954b3997d2432c3cb3428f"><span data-offset-key="0ede849064954b3997d2432c3cb3428f:0">will emit the following js:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="7db8d8d9d619464db88af2c270dbdc71" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="26a9996fe647462981f20dfecef951a2"><span data-key="d572b7e1e74443aa9e0c5a6ea0d672ca"><span data-offset-key="d572b7e1e74443aa9e0c5a6ea0d672ca:0"><span class="prism-token token  keyword ">var</span></span><span data-offset-key="d572b7e1e74443aa9e0c5a6ea0d672ca:1"><span class="prism-token token 1"> foo </span></span><span data-offset-key="d572b7e1e74443aa9e0c5a6ea0d672ca:2"><span class="prism-token token 2 operator ">=</span></span><span data-offset-key="d572b7e1e74443aa9e0c5a6ea0d672ca:3"><span class="prism-token token 3"> </span></span><span data-offset-key="d572b7e1e74443aa9e0c5a6ea0d672ca:4"><span class="prism-token token 4 number ">123</span></span><span data-offset-key="d572b7e1e74443aa9e0c5a6ea0d672ca:5"><span class="prism-token token 5 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="b257fbef0f9e428ead16df787ef47d99"><span data-key="e70c9826244d4b4ba874a3b25d18de09"><span data-offset-key="e70c9826244d4b4ba874a3b25d18de09:0"><span class="prism-token token 6">foo </span></span><span data-offset-key="e70c9826244d4b4ba874a3b25d18de09:1"><span class="prism-token token 7 operator ">=</span></span><span data-offset-key="e70c9826244d4b4ba874a3b25d18de09:2"><span class="prism-token token 8"> </span></span><span data-offset-key="e70c9826244d4b4ba874a3b25d18de09:3"><span class="prism-token token 9 string ">'456'</span></span><span data-offset-key="e70c9826244d4b4ba874a3b25d18de09:4"><span class="prism-token token 10 punctuation ">;</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="0d84a5d1bd554be49d4d830e11cda3d9"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="0bd12ad24fb246a0ac983d6f6ec526a7"><span data-offset-key="0bd12ad24fb246a0ac983d6f6ec526a7:0">So you can incrementally upgrade your JavaScript code to TypeScript. This is very different from how many other language compilers work and yet another reason to move to TypeScript.</span></span></span></p><h2 id="types-can-be-ambient" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="b63ca8f5a3bb441da85c5442add0d002"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="a349a2bb287b4a7e8571867655a71f95"><span data-offset-key="a349a2bb287b4a7e8571867655a71f95:0">Types can be ambient</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#types-can-be-ambient" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="74fbc0a7d37d413eb21772402a881e57"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="c111073b0e324a29aa51feeeb44e234b"><span data-offset-key="c111073b0e324a29aa51feeeb44e234b:0">A major design goal of TypeScript was to make it possible for you to safely and easily use existing JavaScript libraries in TypeScript. TypeScript does this by means of </span><span data-offset-key="c111073b0e324a29aa51feeeb44e234b:1"><em data-slate-leaf="true">declaration</em></span><span data-offset-key="c111073b0e324a29aa51feeeb44e234b:2">. TypeScript provides you with a sliding scale of how much or how little effort you want to put in your declarations, the more effort you put the more type safety + code intelligence you get. Note that definitions for most of the popular JavaScript libraries have already been written for you by the </span></span><a class="link-a079aa82--primary-53a25e66--link-faf6c434" href="https://github.com/borisyankov/DefinitelyTyped" target="_blank" rel="noopener noreferrer" data-key="5eefb85ef33847568c4a394b19020bcc" style="color: rgb(56, 132, 255);"><span data-key="f82b3bac40f8467997620962e3b78b4d"><span data-offset-key="f82b3bac40f8467997620962e3b78b4d:0">DefinitelyTyped community</span></span></a><span data-key="bb15bd99e4924e00a461e286738474dc"><span data-offset-key="bb15bd99e4924e00a461e286738474dc:0"> so for most purposes either:</span></span></span></p><ol class="list-20526648" data-key="55f2ca32d44f41ab925e68dbab25f34b"><li class=""><div data-key="4a64baf1aca2444c82e28fa5c7f0e4b1" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="7fde95adc2d6472195acf725771c3448"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="6ed75599fdb2486eb33fbe6adc0be3f1"><span data-offset-key="6ed75599fdb2486eb33fbe6adc0be3f1:0">The definition file already exists.</span></span></span></p></div></li><li class=""><div data-key="184b5da77d4940bbb9d3b112809680d2" class="reset-3c756112--listItemContent-756c9114"><p class="blockParagraph-544a408c--noMargin-acdf7afa" data-key="5dc5b5b4b4d2404685b19ad8b75be9bf"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="4642ea782f1c4e1d872bed95c83cbcaf"><span data-offset-key="4642ea782f1c4e1d872bed95c83cbcaf:0">Or at the very least, you have a vast list of well reviewed TypeScript declaration templates already available</span></span></span></p></div></li></ol><p class="blockParagraph-544a408c" data-key="f9f7e64dc22340bbba6fd5617e252942"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="0ff0972e0d63422291a1ac9821847efa"><span data-offset-key="0ff0972e0d63422291a1ac9821847efa:0">As a quick example of how you would author your own declaration file, consider a trivial example of </span></span><a class="link-a079aa82--primary-53a25e66--link-faf6c434" href="https://jquery.com/" target="_blank" rel="noopener noreferrer" data-key="06c1ff1a41c84afaa1c136908a3ea113" style="color: rgb(56, 132, 255);"><span data-key="2a230a6257684df88e9e949c16f0f09e"><span data-offset-key="2a230a6257684df88e9e949c16f0f09e:0">jquery</span></span></a><span data-key="6a92ec1697024909a916b2cf61a87d29"><span data-offset-key="6a92ec1697024909a916b2cf61a87d29:0">. By default (as is to be expected of good JS code) TypeScript expects you to declare (i.e. use </span><span data-offset-key="6a92ec1697024909a916b2cf61a87d29:1"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">var</code></span><span data-offset-key="6a92ec1697024909a916b2cf61a87d29:2"> somewhere) before you use a variable</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="0a7c218c43df4951a32d0a1bf346f73d" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="2e7c426281d1480a871c8a82ff41026e"><span data-key="4802a66d6b054a8988020e44bb26de57"><span data-offset-key="4802a66d6b054a8988020e44bb26de57:0"><span class="prism-token token  function ">$</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:1"><span class="prism-token token 1 punctuation ">(</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:2"><span class="prism-token token 2 string ">'.awesome'</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:3"><span class="prism-token token 3 punctuation ">)</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:4"><span class="prism-token token 4 punctuation ">.</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:5"><span class="prism-token token 5 function ">show</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:6"><span class="prism-token token 6 punctuation ">(</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:7"><span class="prism-token token 7 punctuation ">)</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:8"><span class="prism-token token 8 punctuation ">;</span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:9"><span class="prism-token token 9"> </span></span><span data-offset-key="4802a66d6b054a8988020e44bb26de57:10"><span class="prism-token token 10 comment ">// Error: cannot find name `$`</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="6959a7c5d4e74621a240afb82ad6b4d3"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="a9cfe5eba2dc4ed4ac97e78f294271a0"><span data-offset-key="a9cfe5eba2dc4ed4ac97e78f294271a0:0">As a quick fix </span><span data-offset-key="a9cfe5eba2dc4ed4ac97e78f294271a0:1"><em data-slate-leaf="true">you can tell TypeScript</em></span><span data-offset-key="a9cfe5eba2dc4ed4ac97e78f294271a0:2"> that there is indeed something called </span><span data-offset-key="a9cfe5eba2dc4ed4ac97e78f294271a0:3"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">$</code></span><span data-offset-key="a9cfe5eba2dc4ed4ac97e78f294271a0:4">:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="d1113081f1ce41f78c22ab4c9321c6c5" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="116a124e80114ca4967364289b5aa787"><span data-key="9ae974f6d899413cbe3bb9b97905b2b3"><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:0"><span class="prism-token token  keyword ">declare</span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:1"><span class="prism-token token 1"> </span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:2"><span class="prism-token token 2 keyword ">var</span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:3"><span class="prism-token token 3"> $</span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:4"><span class="prism-token token 4 punctuation ">:</span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:5"><span class="prism-token token 5"> </span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:6"><span class="prism-token token 6 builtin ">any</span></span><span data-offset-key="9ae974f6d899413cbe3bb9b97905b2b3:7"><span class="prism-token token 7 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="657fd4b834a04857b38494afd23aee73"><span data-key="d951842ed7634f73bc49cc8b1c9c65e4"><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:0"><span class="prism-token token 9 function ">$</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:1"><span class="prism-token token 10 punctuation ">(</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:2"><span class="prism-token token 11 string ">'.awesome'</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:3"><span class="prism-token token 12 punctuation ">)</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:4"><span class="prism-token token 13 punctuation ">.</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:5"><span class="prism-token token 14 function ">show</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:6"><span class="prism-token token 15 punctuation ">(</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:7"><span class="prism-token token 16 punctuation ">)</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:8"><span class="prism-token token 17 punctuation ">;</span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:9"><span class="prism-token token 18"> </span></span><span data-offset-key="d951842ed7634f73bc49cc8b1c9c65e4:10"><span class="prism-token token 19 comment ">// Okay!</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="0bb818b7d8c940c5836664fcc8950339"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="d9b3f17ffb44420488cd241b4cafc4f1"><span data-offset-key="d9b3f17ffb44420488cd241b4cafc4f1:0">If you want you can build on this basic definition and provide more information to help protect you from errors:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="d261a57a53684596989d0752111681c9" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="abbc0cf2b20d4f8583021f3071d66238"><span data-key="23e4abf16ba149798c33a861cc0b3b82"><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:0"><span class="prism-token token  keyword ">declare</span></span><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:1"><span class="prism-token token 1"> </span></span><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:2"><span class="prism-token token 2 keyword ">var</span></span><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:3"><span class="prism-token token 3"> $</span></span><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:4"><span class="prism-token token 4 punctuation ">:</span></span><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:5"><span class="prism-token token 5"> </span></span><span data-offset-key="23e4abf16ba149798c33a861cc0b3b82:6"><span class="prism-token token 6 punctuation ">{</span></span></span></div><div class="codeLine-a3169fbc" data-key="1603e6fb9e6b4fbb813d661ba2d7c7a2"><span data-key="9f13f146df2e4689930460a1b4bcbd87"><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:0"><span class="prism-token token 7">    </span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:1"><span class="prism-token token 8 punctuation ">(</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:2"><span class="prism-token token 9">selector</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:3"><span class="prism-token token 10 punctuation ">:</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:4"><span class="prism-token token 11 builtin ">string</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:5"><span class="prism-token token 12 punctuation ">)</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:6"><span class="prism-token token 13 punctuation ">:</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:7"><span class="prism-token token 14"> </span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:8"><span class="prism-token token 15 builtin ">any</span></span><span data-offset-key="9f13f146df2e4689930460a1b4bcbd87:9"><span class="prism-token token 16 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="e41059fadf7d42bdb455df994182dad6"><span data-key="3bcdbd93b22f4dea83f6ed49cc7ec0a3"><span data-offset-key="3bcdbd93b22f4dea83f6ed49cc7ec0a3:0"><span class="prism-token token 18 punctuation ">}</span></span><span data-offset-key="3bcdbd93b22f4dea83f6ed49cc7ec0a3:1"><span class="prism-token token 19 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="4efda046c8f84dc8a288c07b075e942d"><span data-key="ce10d063241d4f258e67d777fe2adcae"><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:0"><span class="prism-token token 21 function ">$</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:1"><span class="prism-token token 22 punctuation ">(</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:2"><span class="prism-token token 23 string ">'.awesome'</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:3"><span class="prism-token token 24 punctuation ">)</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:4"><span class="prism-token token 25 punctuation ">.</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:5"><span class="prism-token token 26 function ">show</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:6"><span class="prism-token token 27 punctuation ">(</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:7"><span class="prism-token token 28 punctuation ">)</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:8"><span class="prism-token token 29 punctuation ">;</span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:9"><span class="prism-token token 30"> </span></span><span data-offset-key="ce10d063241d4f258e67d777fe2adcae:10"><span class="prism-token token 31 comment ">// Okay!</span></span></span></div><div class="codeLine-a3169fbc" data-key="f26922c7dae24c6591f6d8accd05aa10"><span data-key="eb6ee9ef07d8477fac1b71cdcc2887ab"><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:0"><span class="prism-token token 33 function ">$</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:1"><span class="prism-token token 34 punctuation ">(</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:2"><span class="prism-token token 35 number ">123</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:3"><span class="prism-token token 36 punctuation ">)</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:4"><span class="prism-token token 37 punctuation ">.</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:5"><span class="prism-token token 38 function ">show</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:6"><span class="prism-token token 39 punctuation ">(</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:7"><span class="prism-token token 40 punctuation ">)</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:8"><span class="prism-token token 41 punctuation ">;</span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:9"><span class="prism-token token 42"> </span></span><span data-offset-key="eb6ee9ef07d8477fac1b71cdcc2887ab:10"><span class="prism-token token 43 comment ">// Error: selector needs to be a string</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="7d9a58fde11642f689c572480a7b189d"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="f842cf21db3143848d3f2d308ce45541"><span data-offset-key="f842cf21db3143848d3f2d308ce45541:0">We will discuss the details of creating TypeScript definitions for existing JavaScript in detail later once you know more about TypeScript (e.g. stuff like </span><span data-offset-key="f842cf21db3143848d3f2d308ce45541:1"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">interface</code></span><span data-offset-key="f842cf21db3143848d3f2d308ce45541:2"> and the </span><span data-offset-key="f842cf21db3143848d3f2d308ce45541:3"><code spellcheck="false" class="code-0458e21e" data-slate-leaf="true">any</code></span><span data-offset-key="f842cf21db3143848d3f2d308ce45541:4">).</span></span></span></p><h1 id="future-javascript-greater-than-now" class="blockHeading-442b4f12--blockHeading1WithMargin-b69d755e" data-key="860805f349b44b4293c622a4c87439d8"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH700-04e1a2a3--textContentFamily-49a318e1"><span data-key="7a0b0b10cbc345bd80e0153d137639c0"><span data-offset-key="7a0b0b10cbc345bd80e0153d137639c0:0">Future JavaScript =&gt; Now</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#future-javascript-greater-than-now" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div><div role="button" tabindex="0" contenteditable="false" class="reset-3c756112--blockHeadingUp-c32402b2" style="color: rgb(56, 132, 255);"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></g></svg></div></h1><p class="blockParagraph-544a408c" data-key="43ae3b0748d940828c76c3aae60e7e28"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="1ee171a06b174e459d54ac89fa8a7455"><span data-offset-key="1ee171a06b174e459d54ac89fa8a7455:0">TypeScript provides a number of features that are planned in ES6 for current JavaScript engines (that only support ES5 etc). The TypeScript team is actively adding these features and this list is only going to get bigger over time and we will cover this in its own section. But just as a specimen here is an example of a class:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="ad03865f63124d509b0844693aaf6b85" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="f4f769564df64175b3b8e9beaa0062cc"><span data-key="34afac2920d54562aaf6fd0e0b5e88b2"><span data-offset-key="34afac2920d54562aaf6fd0e0b5e88b2:0"><span class="prism-token token  keyword ">class</span></span><span data-offset-key="34afac2920d54562aaf6fd0e0b5e88b2:1"><span class="prism-token token 1"> </span></span><span data-offset-key="34afac2920d54562aaf6fd0e0b5e88b2:2"><span class="prism-token token 2 class-name ">Point</span></span><span data-offset-key="34afac2920d54562aaf6fd0e0b5e88b2:3"><span class="prism-token token 3"> </span></span><span data-offset-key="34afac2920d54562aaf6fd0e0b5e88b2:4"><span class="prism-token token 4 punctuation ">{</span></span></span></div><div class="codeLine-a3169fbc" data-key="54c386ba25864089a07a40aee613f6bf"><span data-key="f8ee37798ec4445c9c760388a0b92bc2"><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:0"><span class="prism-token token 5">    </span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:1"><span class="prism-token token 6 keyword ">constructor</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:2"><span class="prism-token token 7 punctuation ">(</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:3"><span class="prism-token token 8 keyword ">public</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:4"><span class="prism-token token 9"> x</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:5"><span class="prism-token token 10 punctuation ">:</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:6"><span class="prism-token token 11"> </span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:7"><span class="prism-token token 12 builtin ">number</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:8"><span class="prism-token token 13 punctuation ">,</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:9"><span class="prism-token token 14"> </span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:10"><span class="prism-token token 15 keyword ">public</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:11"><span class="prism-token token 16"> y</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:12"><span class="prism-token token 17 punctuation ">:</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:13"><span class="prism-token token 18"> </span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:14"><span class="prism-token token 19 builtin ">number</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:15"><span class="prism-token token 20 punctuation ">)</span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:16"><span class="prism-token token 21"> </span></span><span data-offset-key="f8ee37798ec4445c9c760388a0b92bc2:17"><span class="prism-token token 22 punctuation ">{</span></span></span></div><div class="codeLine-a3169fbc" data-key="d8e370f0bd014052bbd3cbf54b76bd41"><span data-key="7f30baead0174511a3f64269cfa64248"><span data-offset-key="7f30baead0174511a3f64269cfa64248:0"><span class="prism-token token 23">    </span></span><span data-offset-key="7f30baead0174511a3f64269cfa64248:1"><span class="prism-token token 24 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="02fec9e7f7884699aa4fff328b4a4ed7"><span data-key="212ec4ed47134b88930333367cf753bb"><span data-offset-key="212ec4ed47134b88930333367cf753bb:0"><span class="prism-token token 25">    </span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:1"><span class="prism-token token 26 function ">add</span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:2"><span class="prism-token token 27 punctuation ">(</span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:3"><span class="prism-token token 28">point</span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:4"><span class="prism-token token 29 punctuation ">:</span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:5"><span class="prism-token token 30"> Point</span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:6"><span class="prism-token token 31 punctuation ">)</span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:7"><span class="prism-token token 32"> </span></span><span data-offset-key="212ec4ed47134b88930333367cf753bb:8"><span class="prism-token token 33 punctuation ">{</span></span></span></div><div class="codeLine-a3169fbc" data-key="de446737d4ea4096bd751561ee915529"><span data-key="2c8e92dd39b04355a2915e21540a65ee"><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:0"><span class="prism-token token 34">        </span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:1"><span class="prism-token token 35 keyword ">return</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:2"><span class="prism-token token 36"> </span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:3"><span class="prism-token token 37 keyword ">new</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:4"><span class="prism-token token 38"> </span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:5"><span class="prism-token token 39 class-name ">Point</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:6"><span class="prism-token token 40 punctuation ">(</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:7"><span class="prism-token token 41 keyword ">this</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:8"><span class="prism-token token 42 punctuation ">.</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:9"><span class="prism-token token 43">x </span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:10"><span class="prism-token token 44 operator ">+</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:11"><span class="prism-token token 45"> point</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:12"><span class="prism-token token 46 punctuation ">.</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:13"><span class="prism-token token 47">x</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:14"><span class="prism-token token 48 punctuation ">,</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:15"><span class="prism-token token 49"> </span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:16"><span class="prism-token token 50 keyword ">this</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:17"><span class="prism-token token 51 punctuation ">.</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:18"><span class="prism-token token 52">y </span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:19"><span class="prism-token token 53 operator ">+</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:20"><span class="prism-token token 54"> point</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:21"><span class="prism-token token 55 punctuation ">.</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:22"><span class="prism-token token 56">y</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:23"><span class="prism-token token 57 punctuation ">)</span></span><span data-offset-key="2c8e92dd39b04355a2915e21540a65ee:24"><span class="prism-token token 58 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="7b56fda188bb48568db8ce5a51584dd6"><span data-key="67af24d37d394505905cd14acd4623b0"><span data-offset-key="67af24d37d394505905cd14acd4623b0:0"><span class="prism-token token 59">    </span></span><span data-offset-key="67af24d37d394505905cd14acd4623b0:1"><span class="prism-token token 60 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="44726ecbba3c4a22809f07a2f322a4f4"><span data-key="0ba1be11ab9446a9a91976154c826726"><span data-offset-key="0ba1be11ab9446a9a91976154c826726:0"><span class="prism-token token 62 punctuation ">}</span></span></span></div><div class="codeLine-a3169fbc" data-key="4da46412aa2644d48953c4cfeda4af84"><span data-key="66edb594ebac48a8b2bcc365c86e39ab"><span data-offset-key="66edb594ebac48a8b2bcc365c86e39ab:0"><span data-slate-zero-width="n">​</span></span></span></div><div class="codeLine-a3169fbc" data-key="efe390419d2547be9138d9e034d2b3fb"><span data-key="1d090f02ce904337a1dd03d6c183061a"><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:0"><span class="prism-token token 64 keyword ">var</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:1"><span class="prism-token token 65"> p1 </span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:2"><span class="prism-token token 66 operator ">=</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:3"><span class="prism-token token 67"> </span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:4"><span class="prism-token token 68 keyword ">new</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:5"><span class="prism-token token 69"> </span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:6"><span class="prism-token token 70 class-name ">Point</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:7"><span class="prism-token token 71 punctuation ">(</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:8"><span class="prism-token token 72 number ">0</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:9"><span class="prism-token token 73 punctuation ">,</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:10"><span class="prism-token token 74"> </span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:11"><span class="prism-token token 75 number ">10</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:12"><span class="prism-token token 76 punctuation ">)</span></span><span data-offset-key="1d090f02ce904337a1dd03d6c183061a:13"><span class="prism-token token 77 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="1cde771d0e874c34bb21e545d24349b8"><span data-key="3ac3dae99a6f419794e4e25e629fe610"><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:0"><span class="prism-token token 79 keyword ">var</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:1"><span class="prism-token token 80"> p2 </span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:2"><span class="prism-token token 81 operator ">=</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:3"><span class="prism-token token 82"> </span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:4"><span class="prism-token token 83 keyword ">new</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:5"><span class="prism-token token 84"> </span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:6"><span class="prism-token token 85 class-name ">Point</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:7"><span class="prism-token token 86 punctuation ">(</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:8"><span class="prism-token token 87 number ">10</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:9"><span class="prism-token token 88 punctuation ">,</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:10"><span class="prism-token token 89"> </span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:11"><span class="prism-token token 90 number ">20</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:12"><span class="prism-token token 91 punctuation ">)</span></span><span data-offset-key="3ac3dae99a6f419794e4e25e629fe610:13"><span class="prism-token token 92 punctuation ">;</span></span></span></div><div class="codeLine-a3169fbc" data-key="d6ca792082d041e7aa0af493f0ce79fa"><span data-key="d07c2064356b4f05a0bef04f19e4f725"><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:0"><span class="prism-token token 94 keyword ">var</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:1"><span class="prism-token token 95"> p3 </span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:2"><span class="prism-token token 96 operator ">=</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:3"><span class="prism-token token 97"> p1</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:4"><span class="prism-token token 98 punctuation ">.</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:5"><span class="prism-token token 99 function ">add</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:6"><span class="prism-token token 100 punctuation ">(</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:7"><span class="prism-token token 101">p2</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:8"><span class="prism-token token 102 punctuation ">)</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:9"><span class="prism-token token 103 punctuation ">;</span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:10"><span class="prism-token token 104"> </span></span><span data-offset-key="d07c2064356b4f05a0bef04f19e4f725:11"><span class="prism-token token 105 comment ">// { x: 10, y: 30 }</span></span></span></div></pre></div><p class="blockParagraph-544a408c" data-key="d798a21addf74d78910cce071e9c82ec"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="11dd5a43b4864d65946470a39470f8ca"><span data-offset-key="11dd5a43b4864d65946470a39470f8ca:0">and the lovely fat arrow function:</span></span></span></p><div class="reset-3c756112--codeBlockWrapper-56f27afc"><div contenteditable="false" class="reset-3c756112--copyButtonWrapper-ca591f6e"><div aria-label="Copy" role="button" tabindex="0" class="reset-3c756112--touchableView-a079aa82--copyButton-4f9a9412--tooltipped-57ae51fe"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></g></svg></div></div><pre data-key="451fe8976a5f4de6b7d2a7eaf2bc4306" spellcheck="false" class="reset-3c756112--codeBlock-36378b66"><div class="codeLine-a3169fbc" data-key="6b670db469314572a4b03a23e5e1cb1f"><span data-key="a877cec02c0a41209058d556bde28c0d"><span data-offset-key="a877cec02c0a41209058d556bde28c0d:0"><span class="prism-token token  keyword ">var</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:1"><span class="prism-token token 1"> </span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:2"><span class="prism-token token 2 function-variable function">inc</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:3"><span class="prism-token token 3"> </span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:4"><span class="prism-token token 4 operator ">=</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:5"><span class="prism-token token 5"> x </span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:6"><span class="prism-token token 6 operator ">=&gt;</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:7"><span class="prism-token token 7"> x</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:8"><span class="prism-token token 8 operator ">+</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:9"><span class="prism-token token 9 number ">1</span></span><span data-offset-key="a877cec02c0a41209058d556bde28c0d:10"><span class="prism-token token 10 punctuation ">;</span></span></span></div></pre></div><h2 id="summary" class="blockHeading-442b4f12--blockHeading2WithMargin-532d771d" data-key="36ca68bd3f3b4bd9bc81236fda7255b3"><div class="blockHeadingContent-756c9114"><span class="text-4505230f--HeadingH600-23f228db--textContentFamily-49a318e1"><span data-key="70857261a59b437d851e7f20026377d3"><span data-offset-key="70857261a59b437d851e7f20026377d3:0">Summary</span></span></span><a href="https://basarat.gitbook.io/typescript/getting-started/why-typescript#summary" contenteditable="false" class="blockHeadingAnchor-34f75d78--blockHeadingAnchorHidden-d69b5eda"><span class="blockHeadingAnchorIcon-1c2bf3cb"><svg preserveAspectRatio="xMidYMid meet" height="1em" width="1em" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" class="icon-7f6730be--text-3f89f380"><g><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></g></svg></span></a></div></h2><p class="blockParagraph-544a408c" data-key="43aff8ea47894a48a5eebb0ef6968ee5"><span class="text-4505230f--TextH400-3033861f--textContentFamily-49a318e1"><span data-key="6986b7d939e94cf594be801f1609b690"><span data-offset-key="6986b7d939e94cf594be801f1609b690:0">In this section we have provided you with the motivation and design goals of TypeScript. With this out of the way we can dig into the nitty gritty details of TypeScript.</span></span></span>
+			
+			
+			
+	
+	
+	</body></html>
